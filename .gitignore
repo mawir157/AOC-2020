@@ -1,0 +1,9 @@
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Ignore input files
+/input/*
+# Haskell build files
+/Haskell/*.o
+/Haskell/*.hi

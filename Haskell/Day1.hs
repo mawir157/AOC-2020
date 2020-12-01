@@ -14,5 +14,5 @@ main = do
 
   let p1 = sum_and_prod t p0 p0
   printSoln 1 (snd $ head (dropWhile (\l -> fst l /= t) p1))
-  let p2 = sum_and_prod t p1 (filter (\(s,_) -> s < t) p0)
+  let p2 = sum_and_prod t (filter (\(s,_) -> s < t) p1) p0
   printSoln 2 (snd $ head (dropWhile (\l -> fst l /= t) p2))

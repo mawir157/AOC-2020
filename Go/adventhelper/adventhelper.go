@@ -31,6 +31,8 @@ func ReadIntFile(fname string) (nums []int, err error) {
 
 // This func must be Exported, Capitalized, and comment added.
 // Print the solution in a standardised format.
-func PrintSoln(part int, soln interface{}) {
-	fmt.Println("Part", part, ":", soln)
+func PrintSoln(day int, soln1 interface{}, soln2 interface{}) {
+    fmt.Println("Day", day)
+    fmt.Println("Part 1:", soln1)
+	fmt.Println("Part 2:", soln2)
 }

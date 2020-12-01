@@ -1,7 +1,5 @@
 import AdventHelper
 
-parseInput x = read(x) :: Integer
-
 sumBy2Indices :: [Integer] -> (Int, Int) -> Integer
 sumBy2Indices xs (v1,v2) = (xs!!v1 + xs!!v2)
 
@@ -11,7 +9,7 @@ sumBy3Indices xs (v1,v2, v3) = (xs!!v1 + xs!!v2 + xs!!v3)
 main = do
   putStrLn "Day 1"
   f <- readFile "../input/input01.txt"
-  let s = map(parseInput) $ lines f
+  let s = map(read) $ lines f :: [Integer]
   let l = (length s)-1
 
   let pairs = [ (x,y) | x <- [0..l], y <- [0..l]]

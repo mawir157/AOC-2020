@@ -1,4 +1,3 @@
-
 pub mod advent_helper
 {
 	use std::{
@@ -6,7 +5,8 @@ pub mod advent_helper
 	    io::{prelude::*, BufReader, Error, ErrorKind},
 	};
 
-	pub fn read_ints(path: &str) -> Result<Vec<i64>, Error> {
+	pub fn read_ints(path: &str) -> Result<Vec<i64>, Error>
+	{
 			let f = File::open(path).unwrap();
 	    let br = BufReader::new(f);
 	    let mut v = vec![];

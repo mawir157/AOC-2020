@@ -1,23 +1,18 @@
 import AdventHelper
 
-sumBy2Indices :: [Integer] -> (Int, Int) -> Integer
-sumBy2Indices xs (v1,v2) = (xs!!v1 + xs!!v2)
-
-sumBy3Indices :: [Integer] -> (Int, Int, Int) -> Integer
-sumBy3Indices xs (v1,v2, v3) = (xs!!v1 + xs!!v2 + xs!!v3)
+sum_and_prod :: Integer -> [(Integer, Integer)] -> [(Integer, Integer)] -> [(Integer, Integer)]
+sum_and_prod _ [x] _ = []
+sum_and_prod t (x:xs) ys = q ++ (sum_and_prod t xs ys)
+  where q = map (\(s',p') -> ((fst x)+s', (snd x)*p')) ys
 
 main = do
   putStrLn "Day 1"
   f <- readFile "../input/input01.txt"
   let s = map(read) $ lines f :: [Integer]
-  let l = (length s)-1
+  let p0 = zip s s
+  let t = 2020
 
-  let pairs = [ (x,y) | x <- [0..l], y <- [0..l]]
-  let sums = zipWithFn (sumBy2Indices s) pairs
-  let ((v1, v2),_) = head $ dropWhile (\(x,p) -> p /= 2020) sums
-  printSoln 1 ((s!!v1)*(s!!v2))
-
-  let triples = [ (x,y,z) | x <- [0..l], y <- [0..l], z <- [0..l]]
-  let sums3 = zipWithFn (sumBy3Indices s) triples
-  let ((w1, w2, w3),_) = head $ dropWhile (\(x,p) -> p /= 2020) sums3
-  printSoln 2 ((s!!w1)*(s!!w2)*(s!!w3))
+  let p1 = sum_and_prod t p0 p0
+  printSoln 1 (snd $ head (dropWhile (\l -> fst l /= t) p1))
+  let p2 = sum_and_prod t p1 (filter (\(s,_) -> s < t) p0)
+  printSoln 2 (snd $ head (dropWhile (\l -> fst l /= t) p2))

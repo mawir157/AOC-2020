@@ -7,7 +7,7 @@ import (
 
 import Helper "./adventhelper"
 
-func CheckString1(str string) (ok1 bool, ok2 bool) {
+func CheckString(str string) (ok1 bool, ok2 bool) {
   parts := strings.Split(str, " ")
   lh    := strings.Split(parts[0], "-")
   lo, _ := strconv.Atoi(lh[0])
@@ -20,11 +20,11 @@ func CheckString1(str string) (ok1 bool, ok2 bool) {
          ((pw[(lo-1):lo] == c) != (pw[(hi-1):hi] == c))
 }
 
-func Part1(pws []string) (count1 int, count2 int) {
+func Count(pws []string) (count1 int, count2 int) {
   count1 = 0;
   count2 = 0;
   for _, pw := range pws {
-    ok1, ok2 := CheckString1(pw)
+    ok1, ok2 := CheckString(pw)
     if (ok1) {
       count1 += 1
     }
@@ -38,7 +38,7 @@ func Part1(pws []string) (count1 int, count2 int) {
 
 func main() {
   strs, _ := Helper.ReadStrFile("../input/input02.txt")
-  p1, p2 := Part1(strs)
+  p1, p2 := Count(strs)
 
   Helper.PrintSoln(2, p1, p2)
 

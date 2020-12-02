@@ -3,27 +3,37 @@ use advent_helper::advent_helper as ah;
 
 fn part1(v: &Vec<i64>, t: i64) -> i64
 {
-	for i in v {
-		for j in v {
-			if t == i + j {
+	for i in v
+	{
+		for j in v
+		{
+			if t == i + j
+			{
 				return i*j;
 			}	
-		} 
+		}
 	}
 	return 0;
 }
 
 fn part2(v: &Vec<i64>, t: i64) -> i64
 {
-	for i in v {
-		for j in v {
-			if i + j > t {continue;} // micro optimisation
-			for k in v {
-				if t == i + j + k {
+	for i in v
+	{
+		for j in v
+		{
+			if i + j > t
+			{
+				continue;
+			}
+			for k in v
+			{
+				if t == i + j + k
+				{
 					return i*j*k;
 				}	
 			}
-		} 
+		}
 	}
 	return 0;
 }

@@ -18,4 +18,15 @@ pub mod advent_helper
 	    }
 	    Ok(v)
 	}
+
+	pub fn read_strs(path: &str) -> Result<Vec<String>, Error>
+	{
+			let f = File::open(path).unwrap();
+	    let br = BufReader::new(f);
+	    let mut v: Vec<String> = vec![];
+	    for line in br.lines() {
+	        v.push(line?);
+	    }
+	    Ok(v)
+	}
 }

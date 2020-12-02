@@ -3,9 +3,12 @@
 # Haskell build files
 /Haskell/*
 !/Haskell/*.hs
+!/Haskell/run.sh
 # Go files
 /Go/*
 !/Go/*.go
+!/Go/run.sh
 # Rust build files
 /Rust/*
 !/Rust/*.rs
+!/Rust/run.sh

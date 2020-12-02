@@ -1,8 +1,5 @@
 import AdventHelper
 
-import Data.List.Split
-import Data.List
-
 parseInput :: String -> ((Int, Int), Char, String)
 parseInput s = ((lo, hi), head (t!!2), t!!3)
   where t = splitOnAnyOf [": ", "-", " "] s

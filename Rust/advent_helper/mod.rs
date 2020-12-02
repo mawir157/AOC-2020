@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 pub mod advent_helper
 {
 	use std::{

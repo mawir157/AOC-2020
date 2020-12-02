@@ -1,5 +1,5 @@
 mod advent_helper;
-use advent_helper::advent_helper as ah;
+use advent_helper::advent_helper::read_strs;
 
 fn check_string(line: &str) -> (bool, bool)
 {
@@ -41,7 +41,7 @@ fn count(pws: &Vec<String>) -> (usize, usize)
 
 fn main()
 {
-  let v = ah::read_strs("../input/input02.txt").unwrap();
+  let v = read_strs("../input/input02.txt").unwrap();
   let (c1, c2) = count(&v);
 
   println!("Day 2");

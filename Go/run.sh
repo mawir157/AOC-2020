@@ -14,13 +14,23 @@ then
 		echo "Day " $day " does not exist"
 	fi
 else
+	missing=""
 	for i in $(seq -f "%02g" 1 25)
 	do
 		if test -f Day$i.go;
 		then
 			go run Day$i.go
 		else
-			echo "Day " $i " does not exist"
+			if [ "$missing" = "" ]
+			then
+				missing=$i
+			else
+				missing=$missing","$i
+			fi
 		fi
 	done
+	if [ "$missing" != "" ]
+	then
+		echo "Missing days = ["$missing"]"
+	fi
 fi

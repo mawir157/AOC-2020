@@ -13,4 +13,4 @@ zipWithFn fn as  = zip as (map (fn) as)
 
 printSoln :: (Show a) => Integer -> a -> IO()
 printSoln n s = do
-  putStrLn ("Part " ++ (show n) ++ ": " ++ (show s))
+  putStrLn ("  Part " ++ (show n) ++ ": " ++ (show s))

@@ -45,7 +45,7 @@ fn main()
   let (c1, c2) = count(&v);
 
   println!("Day 2");
-  println!("Part 1: {}", c1);
-  println!("Part 2: {}", c2);
+  println!("  Part 1: {}", c1);
+  println!("  Part 2: {}", c2);
   return;
 }

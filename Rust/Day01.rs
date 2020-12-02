@@ -43,7 +43,7 @@ fn main()
     let v = read_ints("../input/input01.txt").unwrap();
 
 		println!("Day 1");
-    println!("Part 1: {}", part1(&v, 2020));
-    println!("Part 2: {}", part2(&v, 2020));
+    println!("  Part 1: {}", part1(&v, 2020));
+    println!("  Part 2: {}", part2(&v, 2020));
     return;
 }

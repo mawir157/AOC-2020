@@ -57,6 +57,6 @@ func Filter(test func(interface{}) bool, ss []interface{}) (ret []interface{}) {
 // Print the solution in a standardised format.
 func PrintSoln(day int, soln1 interface{}, soln2 interface{}) {
   fmt.Println("Day", day)
-  fmt.Println("Part 1:", soln1)
-  fmt.Println("Part 2:", soln2)
+  fmt.Println("  Part 1:", soln1)
+  fmt.Println("  Part 2:", soln2)
 }

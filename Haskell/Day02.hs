@@ -4,11 +4,10 @@ import Data.List.Split
 import Data.List
 
 parseInput :: String -> ((Int, Int), Char, String)
-parseInput s = ((lo, hi), head (q!!1), q!!2)
-  where q = splitOn " " s
-        lh = splitOn "-" (q!!0)
-        lo = read (lh!!0) :: Int
-        hi = read (lh!!1) :: Int
+parseInput s = ((lo, hi), head (t!!2), t!!3)
+  where t = splitOnAnyOf [": ", "-", " "] s
+        lo = read (t!!0) :: Int
+        hi = read (t!!1) :: Int
 
 isValid :: ((Int, Int), Char, String) -> Bool
 isValid ((lo, hi), c, pw) = (ct >= lo) && (ct <= hi)

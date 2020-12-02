@@ -1,9 +1,11 @@
-# Ignore all
-*
-# Unignore all with extensions
-!*.*
 # Ignore input files
 /input/*
 # Haskell build files
-/Haskell/*.o
-/Haskell/*.hi
+/Haskell/*
+!/Haskell/*.hs
+# Go files
+/Go/*
+!/Go/*.go
+# Rust build files
+/Rust/*
+!/Rust/*.rs

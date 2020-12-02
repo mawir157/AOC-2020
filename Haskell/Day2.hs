@@ -19,7 +19,7 @@ isValid2 ((lo, hi), c, pw) = ((pw!!(lo-1)) == c) /= ((pw!!(hi-1)) == c)
 
 main = do
   putStrLn "Day 2"
-  f <- readFile "../input/input02,txt"
+  f <- readFile "../input/input02.txt"
   let s = map(parseInput) $ lines f
   printSoln 1 (length $ filter (isValid) s)
   printSoln 1 (length $ filter (isValid2) s)

@@ -2,20 +2,17 @@ import AdventHelper
 
 import Data.List
 
-parseInput :: String -> [Int]
-parseInput ss =  elemIndices '#' ss
-
-tbg :: Int -> [[Int]] -> Int -> (Int, Int) -> Int
+tbg :: Int -> [String] -> Int -> (Int, Int) -> Int
 tbg _ [] _ _ = 0
 tbg w (s:ss) y (dx, dy) = tree + (tbg w ss' y' (dx,dy))
-  where tree = if' (elem y s) 1 0
+  where tree = if' (s!!y == '#') 1 0
         y' = (y + dy) `mod` w
         ss' = drop (dx-1) ss
 
 main = do
   putStrLn "Day 3"
   f <- readFile "../input/input03.txt"
-  let s = map(parseInput) $ lines f
+  let s = lines f
   let w = length $ head $ lines f
 
   printSoln 1 (tbg w s 0 (1,3))

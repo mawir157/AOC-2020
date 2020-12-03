@@ -4,18 +4,12 @@ import Helper "./adventhelper"
 
 func tbg(w int, ss []string, dx int, dy int) (trees int) {
 	trees = 0;
-	y := 0
-	for i, s := range ss {
-		if (i % dx != 0) {
-			continue
-		} 
-
-		if s[y:(y+1)] == "#" {
+	for i, y:= 0, 0; i < len(ss); i, y = (i + dx), ((y + dy) % w) {
+		if ss[i][y:(y+1)] == "#" {
 			trees += 1
 		}
-
-		y = (y + dy) % w
 	}
+
 	return trees
 }
 

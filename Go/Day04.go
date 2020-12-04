@@ -50,7 +50,6 @@ func checkId(s string, extra bool) (part1 bool, part2 bool) {
 
 		if (extra) {
 			ok := true
-			// regex in h
 			switch key {
 				case "byr":
 					ok, _ = regexp.Match("(19[2-9][0-9]|200[0-2])", []byte(value))

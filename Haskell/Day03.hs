@@ -13,7 +13,7 @@ main = do
   putStrLn "Day 3"
   f <- readFile "../input/input03.txt"
   let s = lines f
-  let w = length $ head $ lines f
+  let w = length $ head s
 
   printSoln 1 (tbg w s 0 (1,3))
   printSoln 2 (product $ map (tbg w s 0) [(1,1),(1,3),(1,5),(1,7),(2,1)])

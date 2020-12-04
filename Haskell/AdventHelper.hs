@@ -14,3 +14,11 @@ zipWithFn fn as  = zip as (map (fn) as)
 printSoln :: (Show a) => Integer -> a -> IO()
 printSoln n s = do
   putStrLn ("  Part " ++ (show n) ++ ": " ++ (show s))
+
+tuplify2 :: [a] -> (a,a)
+tuplify2 [x,y] = (x,y)
+
+concat' :: [[a]] -> a -> [a]
+concat' [] _ = []
+concat' [s] _ = s
+concat' (s:ss) c  = s ++ [c] ++ concat' ss c

@@ -20,18 +20,18 @@ fn tbg(w: usize, ss: &Vec<String>, dx: usize, dy: usize) -> usize
 
 fn main()
 {
-  let v = read_strs("../input/input03.txt").unwrap();
-  let w = v[0].len();
+	let v = read_strs("../input/input03.txt").unwrap();
+	let w = v[0].len();
 
-  let t1 = tbg(w, &v, 1,1);
-  let t2 = tbg(w, &v, 1,3);
-  let t3 = tbg(w, &v, 1,5);
-  let t4 = tbg(w, &v, 1,7);
-  let t5 = tbg(w, &v, 2,1);
+	let t1 = tbg(w, &v, 1,1);
+	let t2 = tbg(w, &v, 1,3);
+	let t3 = tbg(w, &v, 1,5);
+	let t4 = tbg(w, &v, 1,7);
+	let t5 = tbg(w, &v, 2,1);
 
-  println!("Day 3");
-  println!("  Part 1: {}", t2);
-  println!("  Part 2: {}", t1*t2*t3*t4*t5);
+	println!("Day 3");
+	println!("  Part 1: {}", t2);
+	println!("  Part 2: {}", t1*t2*t3*t4*t5);
 
-  return;
+	return;
 }

@@ -60,3 +60,12 @@ func PrintSoln(day int, soln1 interface{}, soln2 interface{}) {
 	fmt.Println("  Part 1:", soln1)
 	fmt.Println("  Part 2:", soln2)
 }
+
+// a^b
+func PowInt(a int, b int) (n int) {
+	n = 1
+	for i := 0; i < b; i++ {
+		n *= a
+	}
+	return n
+}

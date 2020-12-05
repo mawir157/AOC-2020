@@ -9,8 +9,5 @@
 !/Go/*.go
 !/Go/run.sh
 # Rust build files
-# /Rust/*
-# !/Rust/aoc-2020/Cargo.toml
-# !/Rust/aoc-2020/src/*
 /Rust/aoc-2020/Cargo.lock
 /Rust/aoc-2020/target/*

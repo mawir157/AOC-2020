@@ -1,4 +1,3 @@
-// mod advent_helper;
 use crate::advent_helper::advent_helper::read_strs;
 
 fn tbg(w: usize, ss: &Vec<String>, dx: usize, dy: usize) -> usize
@@ -20,7 +19,7 @@ fn tbg(w: usize, ss: &Vec<String>, dx: usize, dy: usize) -> usize
 
 pub fn run()
 {
-	let v = read_strs("../../input/input03.txt").unwrap();
+	let v = read_strs("../input/input03.txt").unwrap();
 	let w = v[0].len();
 
 	let t1 = tbg(w, &v, 1,1);

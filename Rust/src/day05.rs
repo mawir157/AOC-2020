@@ -29,7 +29,7 @@ fn missing(is: &Vec<u32>) -> u32
 
 pub fn run()
 {
-	let v = read_strs("../../input/input05.txt").unwrap();
+	let v = read_strs("../input/input05.txt").unwrap();
 	let mut w: Vec<u32> = vec![];
 
 	for s in v

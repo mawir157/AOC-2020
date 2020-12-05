@@ -1,5 +1,3 @@
-cd aoc-2020
-
 if [ $# -gt 0 ]
 then
   day=$(printf "%02d" $1)
@@ -29,5 +27,3 @@ then
 		echo "Missing days = ["$missing"]"
 	fi
 fi
-
-cd ..

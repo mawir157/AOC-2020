@@ -1,4 +1,3 @@
-// mod advent_helper;
 use crate::advent_helper::advent_helper::read_ints;
 
 fn part1(v: &Vec<i64>, t: i64) -> i64
@@ -40,7 +39,7 @@ fn part2(v: &Vec<i64>, t: i64) -> i64
 
 pub fn run()
 {
-	let v = read_ints("../../input/input01.txt").unwrap();
+	let v = read_ints("../input/input01.txt").unwrap();
 
 	println!("Day 1");
 	println!("  Part 1: {}", part1(&v, 2020));

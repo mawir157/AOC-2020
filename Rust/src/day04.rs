@@ -1,4 +1,3 @@
-// mod advent_helper;
 use crate::advent_helper::advent_helper::read_strs;
 
 use std::collections::HashMap;
@@ -65,7 +64,7 @@ fn check_id(line: &str, minimal: bool) -> bool
 			{
 				let re = Regex::new(r"(19[2-9][0-9]|200[0-2])").unwrap();
 				ok = re.is_match(&value);
-			}, 
+			},
 			"iyr" =>
 			{
 				let re = Regex::new(r"(201[0-9]|2020)").unwrap();
@@ -112,7 +111,7 @@ fn check_id(line: &str, minimal: bool) -> bool
 
 pub fn run()
 {
-	let v = parse_file("../../input/input04.txt");
+	let v = parse_file("../input/input04.txt");
 
 	let mut part1 = 0;
 	let mut part2 = 0;

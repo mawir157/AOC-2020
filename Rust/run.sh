@@ -4,12 +4,12 @@ if [ $# -gt 0 ]
 then
   day=$(printf "%02d" $1)
 else
-  day=-1
+  day=0
 fi
 
 cargo run $day
 
-if [ $day -lt 0 ]
+if [ $day -lt 1 ]
 then
 	missing=""
 	for i in $(seq -f "%02g" 1 25)

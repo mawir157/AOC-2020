@@ -2,13 +2,7 @@
 use crate::advent_helper::advent_helper::read_strs;
 
 use std::collections::HashMap;
-
 use regex::Regex;
-
-// use std::{
-// 	fs::File,
-// 	io::{prelude::*, BufReader, Error},
-// };
 
 fn parse_file(path: &str) -> Vec<String>
 {
@@ -120,13 +114,10 @@ pub fn run()
 {
 	let v = parse_file("../../input/input04.txt");
 
-// println!("{}", v.len());
-
 	let mut part1 = 0;
 	let mut part2 = 0;
 	for s in v
 	{
-		// println!("{}", s);
 		if check_id(&s, true)
 		{
 			part1 += 1;

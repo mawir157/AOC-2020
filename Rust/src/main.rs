@@ -4,6 +4,7 @@ mod day02;
 mod day03;
 mod day04;
 mod day05;
+mod day06;
 
 fn main() {
 	let pattern = std::env::args().nth(1).expect("no pattern given");
@@ -15,6 +16,7 @@ fn main() {
 		"03" => day03::run(), 
 		"04" => day04::run(), 
 		"05" => day05::run(), 
+		"06" => day06::run(), 
 		_  =>
 		{
 			day01::run();
@@ -22,6 +24,7 @@ fn main() {
 			day03::run();
 			day04::run();
 			day05::run();
+			day06::run();
 		},
 	}
 

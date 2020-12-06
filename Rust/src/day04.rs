@@ -1,39 +1,7 @@
-use crate::advent_helper::advent_helper::read_strs;
+use crate::advent_helper::advent_helper::parse_line_groups;
 
 use std::collections::HashMap;
 use regex::Regex;
-
-fn parse_file(path: &str) -> Vec<String>
-{
-	let ss = read_strs(path).unwrap();
-
-	let mut v: Vec<String> = vec![];
-	
-	let mut temp: String = "".to_string();
-	for s in ss
-	{
-		if s.chars().count() == 0
-		{
-			v.push(temp.clone());
-			temp = "".to_string();
-		}
-		else
-		{
-			if temp.chars().count() == 0
-			{
-				temp = s;
-			}
-			else
-			{
-				temp = temp + " " + &s;
-			}
-		}
-	}
-	// for some reason rust wont allow an empty string at the end of br.lines()
-	v.push(temp.clone());
-
-	return v;
-}
 
 fn check_id(line: &str, minimal: bool) -> bool
 {
@@ -111,7 +79,7 @@ fn check_id(line: &str, minimal: bool) -> bool
 
 pub fn run()
 {
-	let v = parse_file("../input/input04.txt");
+	let v = parse_line_groups("../input/input04.txt", " ");
 
 	let mut part1 = 0;
 	let mut part2 = 0;

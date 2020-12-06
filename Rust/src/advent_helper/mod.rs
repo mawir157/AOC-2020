@@ -30,4 +30,36 @@ pub mod advent_helper
 		}
 		Ok(v)
 	}
+
+	pub fn parse_line_groups(path: &str, sep: &str) -> Vec<String>
+	{
+		let ss = read_strs(path).unwrap();
+
+		let mut v: Vec<String> = vec![];
+		
+		let mut temp: String = "".to_string();
+		for s in ss
+		{
+			if s.chars().count() == 0
+			{
+				v.push(temp.clone());
+				temp = "".to_string();
+			}
+			else
+			{
+				if temp.chars().count() == 0
+				{
+					temp = s;
+				}
+				else
+				{
+					temp = temp + sep + &s;
+				}
+			}
+		}
+		// for some reason rust wont allow an empty string at the end of br.lines()
+		v.push(temp.clone());
+
+		return v;
+	}
 }

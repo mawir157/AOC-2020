@@ -1,13 +1,12 @@
 package main
 
 import (
-	// "io/ioutil"
 	"strings"
 )
 
 import Helper "./adventhelper"
 
-func eachAnswer(ss string, split string) (n int, n2 int)  {
+func eachAnswer(ss string, split string) (n int, n2 int) {
 	count := make(map[string]int)
 	lines := strings.Split(ss, split)
 
@@ -18,11 +17,11 @@ func eachAnswer(ss string, split string) (n int, n2 int)  {
 	}
 
 	n2 = 0
-  for _, v := range count {
-  	if v == len(lines) {
-  		n2 += 1
-  	}
-  }
+	for _, v := range count {
+		if v == len(lines) {
+			n2 += 1
+		}
+	}
 
 	return len(count), n2
 }

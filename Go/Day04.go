@@ -70,7 +70,6 @@ func main() {
 		}
 	}
 
-
 	Helper.PrintSoln(4, part1, part2)
 
 	return

@@ -18,4 +18,4 @@ main = do
   f <- readFile "../input/input02.txt"
   let s = map(parseInput) $ lines f
   printSoln 1 (length $ filter (isValid) s)
-  printSoln 1 (length $ filter (isValid2) s)
+  printSoln 2 (length $ filter (isValid2) s)

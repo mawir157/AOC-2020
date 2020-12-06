@@ -4,7 +4,7 @@ import Data.List
 
 getSeat :: String -> String -> Integer
 getSeat ones s = sum $ zipWith (*) b $ zipWith (^) (repeat 2) [0..(length s - 1)]
-  where b = reverse $ map (\x -> if' (elem x ones) 0 1) s 
+  where b = reverse $ map (\x -> if' (elem x ones) 0 1) s
 
 missing :: [Integer] -> Integer
 missing [x] = x

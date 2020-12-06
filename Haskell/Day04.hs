@@ -16,8 +16,8 @@ checkId1 s = length f == 0
 
 checkId2 :: String -> Bool
 checkId2 s = all (checkUnit) us
-  where s' = splitOn " " s                          
-        us = map (\x -> tuplify2 $ splitOn ":" x) s' 
+  where s' = splitOn " " s
+        us = map (\x -> tuplify2 $ splitOn ":" x) s'
 
 checkUnit :: (String, String) -> Bool
 checkUnit ("byr",v) = v =~ "(19[2-9][0-9]|200[0-2])"
@@ -30,16 +30,10 @@ checkUnit ("pid",v) = v =~ "^([0-9]){9}$"
 checkUnit ("cid",v) = True
 checkUnit otherwise = error "Unidentified category"
 
-parseFile :: [String] -> [String]
-parseFile [] = []
-parseFile ss = [(concat' b ' ')] ++ (parseFile ss')
-  where b = takeWhile (\l -> length l > 0) ss
-        ss' = drop 1 $ dropWhile (\l -> length l > 0) ss
-
 main = do
   putStrLn "Day 4"
   f <- readFile "../input/input04.txt"
-  let s = parseFile $ lines f
+  let s = parseLineGroups " " $ lines f
 
   printSoln 1 (length $ filter (checkId1) s)
   printSoln 2 (length $ filter (checkId2) $ filter (checkId1) s)

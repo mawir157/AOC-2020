@@ -18,7 +18,13 @@ printSoln n s = do
 tuplify2 :: [a] -> (a,a)
 tuplify2 [x,y] = (x,y)
 
-concat' :: [[a]] -> a -> [a]
+concat' :: [[a]] -> [a] -> [a]
 concat' [] _ = []
 concat' [s] _ = s
-concat' (s:ss) c  = s ++ [c] ++ concat' ss c
+concat' (s:ss) c  = s ++ c ++ concat' ss c
+
+parseLineGroups :: String -> [String] -> [String]
+parseLineGroups _ [] = []
+parseLineGroups c ss = [(concat' b c)] ++ (parseLineGroups c ss')
+  where b = takeWhile (\l -> length l > 0) ss
+        ss' = drop 1 $ dropWhile (\l -> length l > 0) ss

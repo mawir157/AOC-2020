@@ -4,8 +4,7 @@ import Data.List
 import Data.List.Split
 
 eachAnswer :: String -> String
-eachAnswer s = foldl1 intersect ss
-  where ss = splitOn ":" s
+eachAnswer s = foldl1 intersect $ splitOn ":" s
 
 main = do
   putStrLn "Day 6"
@@ -13,4 +12,4 @@ main = do
   let s = parseLineGroups ":" $ lines f
 
   printSoln 1 (sum $ map (length . nub . filter (/= ':')) s)
-  printSoln 1 (sum $ map (length . nub . eachAnswer) s)
+  printSoln 2 (sum $ map (length . nub . eachAnswer) s)

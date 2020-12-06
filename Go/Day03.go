@@ -10,7 +10,7 @@ func tbg(w int, ss []string, dx int, dy int) (trees int) {
 		}
 	}
 
-	return trees
+	return
 }
 
 func main() {

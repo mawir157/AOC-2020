@@ -33,7 +33,7 @@ func Count(pws []string) (count1 int, count2 int) {
 		}
 	}
 
-	return count1, count2
+	return
 }
 
 func main() {

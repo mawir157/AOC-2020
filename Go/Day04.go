@@ -1,33 +1,11 @@
 package main
 
 import (
-	"io/ioutil"
 	"regexp"
 	"strings"
 )
 
 import Helper "./adventhelper"
-
-func ParseFile(fname string) (strs []string, err error) {
-	b, err := ioutil.ReadFile(fname)
-	if err != nil { return nil, err }
-
-	lines := strings.Split(string(b), "\n")
-	temp := ""
-	for _, l := range lines {
-		if l != "" {
-			if len(temp) == 0 {
-				temp = l
-			} else {
-				temp = temp + " " + l
-			}
-		} else {
-			strs = append(strs,temp)
-			temp = ""
-		}
-	}
-	return strs, nil
-}
 
 func checkId(s string) (part1 bool, part2 bool) {
 	part1 = true
@@ -74,11 +52,11 @@ func checkId(s string) (part1 bool, part2 bool) {
 		part1 = part1 && seen[key]
 	}
 
-	return part1, part2
+	return
 }
 
 func main() {
-	ss, _ := ParseFile("../input/input04.txt")
+	ss, _ := Helper.ParseLineGroups("../input/input04.txt", " ")
 
 	part1 := 0
 	part2 := 0

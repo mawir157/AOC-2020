@@ -45,12 +45,12 @@ func ReadIntFile(fname string) (nums []int, err error) {
 
 // Mimics Haskell's filter function
 func Filter(test func(interface{}) bool, ss []interface{}) (ret []interface{}) {
-		for _, s := range ss {
-				if test(s) {
-						ret = append(ret, s)
-				}
+	for _, s := range ss {
+		if test(s) {
+			ret = append(ret, s)
 		}
-		return
+	}
+	return
 }
 
 // This func must be Exported, Capitalized, and comment added.
@@ -67,5 +67,27 @@ func PowInt(a int, b int) (n int) {
 	for i := 0; i < b; i++ {
 		n *= a
 	}
-	return n
+	return
+}
+
+// combine groups of lines separate by empty lines
+func ParseLineGroups(fname string, sep string) (strs []string, err error) {
+	b, err := ioutil.ReadFile(fname)
+	if err != nil { return nil, err }
+
+	lines := strings.Split(string(b), "\n")
+	temp := ""
+	for _, l := range lines {
+		if l != "" {
+			if len(temp) == 0 {
+				temp = l
+			} else {
+				temp = temp + sep + l
+			}
+		} else {
+			strs = append(strs,temp)
+			temp = ""
+		}
+	}
+	return strs, nil
 }

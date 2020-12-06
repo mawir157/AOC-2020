@@ -14,7 +14,7 @@ func getSeat(ones string, s string, l int) (n int) {
 			n += Helper.PowInt(2, l - 1 - i)
 		}
 	}
-	return n
+	return
 }
 
 func missing(is []int) (n int) {

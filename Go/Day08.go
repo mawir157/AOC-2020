@@ -43,7 +43,7 @@ func (m *Machine) tick() (exitCode int) {
 		return 1 // the pointer is Out of Bounds
 	} else if Helper.Contains(m.History, m.Pointer) {
 		return -1 // we've enetered an infinite loop
-	} else { // we have are expecting a valid instruction
+	} else { // we are expecting a valid instruction
 		ins := m.at().Instruction
 		val := m.at().Value
 		m.History = append(m.History, m.Pointer)
@@ -54,8 +54,8 @@ func (m *Machine) tick() (exitCode int) {
 			m.Pointer += val
 		} else if ins == "nop" {
 			m.Pointer += 1
-		}	else {
-			return -2	// we have a INVALID instruction
+		} else {
+			return -2 // we have a INVALID instruction
 		}
 		return 0 // Carry on...
 	}

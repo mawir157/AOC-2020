@@ -7,6 +7,14 @@ import (
 	"strings"
 )
 
+// This func must be Exported, Capitalized, and comment added.
+// Print the solution in a standardised format.
+func PrintSoln(day int, soln1 interface{}, soln2 interface{}) {
+	fmt.Println("Day", day)
+	fmt.Println("  Part 1:", soln1)
+	fmt.Println("  Part 2:", soln2)
+}
+////////////////////////////////////////////////////////////////////////////////
 func ReadStrFile(fname string) (strs []string, err error) {
 	b, err := ioutil.ReadFile(fname)
 	if err != nil { return nil, err }
@@ -43,33 +51,6 @@ func ReadIntFile(fname string) (nums []int, err error) {
 	return nums, nil
 }
 
-// Mimics Haskell's filter function
-func Filter(test func(interface{}) bool, ss []interface{}) (ret []interface{}) {
-	for _, s := range ss {
-		if test(s) {
-			ret = append(ret, s)
-		}
-	}
-	return
-}
-
-// This func must be Exported, Capitalized, and comment added.
-// Print the solution in a standardised format.
-func PrintSoln(day int, soln1 interface{}, soln2 interface{}) {
-	fmt.Println("Day", day)
-	fmt.Println("  Part 1:", soln1)
-	fmt.Println("  Part 2:", soln2)
-}
-
-// a^b
-func PowInt(a int, b int) (n int) {
-	n = 1
-	for i := 0; i < b; i++ {
-		n *= a
-	}
-	return
-}
-
 // combine groups of lines separate by empty lines
 func ParseLineGroups(fname string, sep string) (strs []string, err error) {
 	b, err := ioutil.ReadFile(fname)
@@ -90,4 +71,34 @@ func ParseLineGroups(fname string, sep string) (strs []string, err error) {
 		}
 	}
 	return strs, nil
+}
+////////////////////////////////////////////////////////////////////////////////
+// Mimics Haskell's filter function
+func Filter(test func(interface{}) bool, ss []interface{}) (ret []interface{}) {
+	for _, s := range ss {
+		if test(s) {
+			ret = append(ret, s)
+		}
+	}
+	return
+}
+
+// a^b
+func PowInt(a int, b int) (n int) {
+	n = 1
+	for i := 0; i < b; i++ {
+		n *= a
+	}
+	return
+}
+
+// does the array s contain e?
+func Contains(s []int, e int) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+
+	return false
 }

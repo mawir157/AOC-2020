@@ -37,7 +37,6 @@ func main() {
 		part2 += v2
 	}
 
-
 	Helper.PrintSoln(6, part1, part2)
 
 	return

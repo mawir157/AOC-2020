@@ -12,7 +12,7 @@ type Command struct {
 	Value       int
 }
 
-func (c *Command) flip () {
+func (c *Command) flip() {
 	if c.Instruction == "acc" {
 		// do nothing
 	} else if c.Instruction == "nop" {
@@ -27,14 +27,6 @@ type Machine struct {
 	History     []int
 	Pointer     int
 	Program     []Command
-}
-
-func parseLine(s string) (com Command) {
-	parts := strings.Split(s, " ")
-	v,_ := strconv.Atoi(parts[1])
-
-	com = Command{Instruction: parts[0], Value: v}
-	return com
 }
 
 func (m Machine) at() (Command) {
@@ -75,6 +67,24 @@ func (m *Machine) tick() (exitCode int) {
 	return -3
 }
 
+func (m *Machine) run() (exitCode int) {
+  exitCode = 0
+  
+  for exitCode == 0 {
+  	exitCode = m.tick()
+  }
+
+  return exitCode	
+}
+
+func parseLine(s string) (com Command) {
+	parts := strings.Split(s, " ")
+	v,_ := strconv.Atoi(parts[1])
+
+	com = Command{Instruction: parts[0], Value: v}
+	return com
+}
+
 func main() {
 	ss, _ := Helper.ReadStrFile("../input/input08.txt")
 	part1 := 0
@@ -91,27 +101,21 @@ func main() {
                   	Pointer:     0,
                     Program:     prg}
 
-	for true {
-		if skynet.tick() != 0 {
-			break
-		}
-	}
+	skynet.run()
 	part1 = skynet.Accumulator
-
 	
+
+	cp :=  make([]Command, len(prg))
 	for i := 0; i < len(prg); i++ {
-		cp :=  make([]Command, len(prg))
 		copy(cp, prg)
 		cp[i].flip()
 
-		tempM := Machine{Accumulator: 0, History: make([]int, 0, 1000),
-                  	 Pointer:0, Program:cp}
+		tempM := Machine{Accumulator: 0,
+		                 History:     make([]int, 0, 1000),
+                  	 Pointer:     0,
+                  	 Program:     cp}
 
-    code := tempM.tick()
-    
-    for code == 0 {
-    	code = tempM.tick()
-    }    
+    code := tempM.run()
 
     if code == 1 {
     	part2 = tempM.Accumulator

@@ -93,7 +93,18 @@ func PowInt(a int, b int) (n int) {
 }
 
 // does the array s contain e?
-func Contains(s []int, e int) bool {
+func ContainsInt(s []int, e int) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+
+	return false
+}
+
+// does the array s contain e?
+func ContainsStr(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
 			return true

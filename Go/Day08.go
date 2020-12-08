@@ -41,7 +41,7 @@ func (m Machine) at() (Command) {
 func (m *Machine) tick() (exitCode int) {
 	if m.Pointer >= len(m.Program) || m.Pointer < 0 {
 		return 1 // the pointer is Out of Bounds
-	} else if Helper.Contains(m.History, m.Pointer) {
+	} else if Helper.ContainsInt(m.History, m.Pointer) {
 		return -1 // we've enetered an infinite loop
 	} else { // we are expecting a valid instruction
 		ins := m.at().Instruction

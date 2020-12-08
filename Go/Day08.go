@@ -68,13 +68,13 @@ func (m *Machine) tick() (exitCode int) {
 }
 
 func (m *Machine) run() (exitCode int) {
-  exitCode = 0
-  
-  for exitCode == 0 {
-  	exitCode = m.tick()
-  }
+ 	exitCode = 0
 
-  return exitCode	
+	for exitCode == 0 {
+		exitCode = m.tick()
+	}
+
+	return exitCode	
 }
 
 func parseLine(s string) (com Command) {
@@ -97,30 +97,30 @@ func main() {
 	}
 
 	skynet := Machine{Accumulator: 0,
-                    History:     make([]int, 0, 1000),
-                  	Pointer:     0,
-                    Program:     prg}
+	                  History:     make([]int, 0, 1000),
+	                	Pointer:     0,
+	                  Program:     prg}
 
 	skynet.run()
 	part1 = skynet.Accumulator
 	
 
-	cp :=  make([]Command, len(prg))
+	cp := make([]Command, len(prg))
 	for i := 0; i < len(prg); i++ {
 		copy(cp, prg)
 		cp[i].flip()
 
 		tempM := Machine{Accumulator: 0,
 		                 History:     make([]int, 0, 1000),
-                  	 Pointer:     0,
-                  	 Program:     cp}
+		                 Pointer:     0,
+		                 Program:     cp}
 
-    code := tempM.run()
+		code := tempM.run()
 
-    if code == 1 {
-    	part2 = tempM.Accumulator
-    	break
-    } 
+		if code == 1 {
+			part2 = tempM.Accumulator
+			break
+		}
 	}
 
 	Helper.PrintSoln(8, part1, part2)

@@ -2,10 +2,12 @@ import AdventHelper
 
 import Data.List.Split
 
-data Ins = ACC | JMP | NOP  deriving (Eq, Show)
+data Ins = ACC | JMP | NOP deriving (Eq, Show)
+data Code = CONT | HALT | LOOP | ERR deriving (Eq, Show)
 
 type Com = (Ins, Int)
-type Machine = (Int, Int, [Com]) -- accumalator, instruction pointer, program
+-- accumalator, instruction pointer, program, history, status code
+type Machine = (Int, Int, [Com], [Int], Code) 
 
 parsePM :: String -> Int
 parsePM (s:ss) = (if' (s == '-') (-1) 1) * (read ss :: Int) 
@@ -19,17 +21,19 @@ parseInput s
         v = parsePM (ss!!1)
 
 tick :: Machine -> Machine
-tick (acc, ptr, prg)
-  | ptr >= length prg = (acc,             ptr,              [])
-  | fst com == ACC    = (acc + (snd com), succ ptr,         prg)
-  | fst com == JMP    = (acc,             ptr  + (snd com), prg)
-  | fst com == NOP    = (acc,             succ ptr,         prg)
-  where com = (prg!!ptr)
+tick (acc, ptr, prg, his, code)
+  | elem ptr his = (acc, ptr, prg, his, LOOP)
+  | ptr >= length prg || ptr < 0 = (acc, ptr, prg, his, HALT)
+  | c == ACC  = (acc + v, succ ptr, prg, his ++ [ptr], CONT)
+  | c == JMP  = (acc,     ptr + v,  prg, his ++ [ptr], CONT)
+  | c == NOP  = (acc,     succ ptr, prg, his ++ [ptr], CONT)
+  | otherwise = (acc, ptr, prg, his, ERR)
+  where (c,v) = (prg!!ptr)
 
-tickUntilRep :: (Machine, [Int]) -> (Machine, [Int])
-tickUntilRep ((acc,ptr,prg), seen)
-  | elem ptr seen = ((acc,ptr,prg), seen)
-  | otherwise     = tickUntilRep (tick (acc,ptr,prg), seen ++ [ptr])
+tickUntilRep :: Machine -> Machine
+tickUntilRep (acc, ptr, prg, his, code)
+  | code == CONT = tickUntilRep $ tick (acc, ptr, prg, his, code)
+  | otherwise    = (acc, ptr, prg, his, code)
 
 fixProgram :: [Com] -> Int -> [Com]
 fixProgram cs n = (take n cs) ++ [(c',v)] ++ (drop (n+1) cs)
@@ -41,10 +45,10 @@ main = do
   f <- readFile "../input/input08.txt"
   let s = map (parseInput) $ lines f
 
-  let ((acc,_,_), _) = tickUntilRep ((0,0,s), [])
+  let (acc,_,_,_,_) = tickUntilRep (0,0,s,[],CONT)
   printSoln 1 acc
 
   let fixed = map (fixProgram s) [0..((length s) - 1)]
-  let fs = map (\x -> tickUntilRep ((0,0,x), [])) fixed
-  let ((acc',_,_), _) = head $ dropWhile (\((_,_,p),_) -> p /= []) fs
+  let fs = map (\x -> tickUntilRep (0,0,x,[],CONT)) fixed
+  let (acc',_,_,_,_) = head $ dropWhile (\(_,_,_,_,c) -> c /= HALT) fs
   printSoln 2 acc'

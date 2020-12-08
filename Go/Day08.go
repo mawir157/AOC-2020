@@ -38,33 +38,27 @@ func (m Machine) at() (Command) {
 // 1  - halted (pointer out of bounds)
 // -1 - entered an infinite loop
 // -2 - unrecognised command
-// -3 - Complete faliure of logic!
 func (m *Machine) tick() (exitCode int) {
 	if m.Pointer >= len(m.Program) || m.Pointer < 0 {
-		// the pointer is Out of Bounds
-		return 1
+		return 1 // the pointer is Out of Bounds
 	} else if Helper.Contains(m.History, m.Pointer) {
-		// we've enetered an infinite loop
-		return -1
-	} else {
-		// we have a valid instruction
+		return -1 // we've enetered an infinite loop
+	} else { // we have are expecting a valid instruction
 		ins := m.at().Instruction
 		val := m.at().Value
 		m.History = append(m.History, m.Pointer)
 		if ins == "acc" {
 			m.Accumulator += val
 			m.Pointer += 1
-			return 0
 		} else if ins == "jmp" {
 			m.Pointer += val
-			return 0
 		} else if ins == "nop" {
 			m.Pointer += 1
-			return 0
-		}	
-		return -2	
+		}	else {
+			return -2	// we have a INVALID instruction
+		}
+		return 0 // Carry on...
 	}
-	return -3
 }
 
 func (m *Machine) run() (exitCode int) {
@@ -98,13 +92,12 @@ func main() {
 
 	skynet := Machine{Accumulator: 0,
 	                  History:     make([]int, 0, 1000),
-	                	Pointer:     0,
+	                  Pointer:     0,
 	                  Program:     prg}
 
 	skynet.run()
 	part1 = skynet.Accumulator
 	
-
 	cp := make([]Command, len(prg))
 	for i := 0; i < len(prg); i++ {
 		copy(cp, prg)

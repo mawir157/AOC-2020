@@ -20,28 +20,21 @@ parseChildren s = [(n, (a++" "++c))] ++ parseChildren next
 
 replace :: (Integer, Bag) -> Bag -> (Integer, Bag)
 replace (i, (b, bs)) (t, ts)
-  | ts == []  = (i, (b, bs))
-  | rep == 0  = (i, (b, bs))
+  | bs == []  = (i, (b, bs))
   | otherwise = (i + rep, (b, sort (bs' ++ ts')))
   where rep = sum $ map (fst) $ filter (\(_,cs) -> cs == t) bs
         bs' = filter (\(_,cs) -> cs /= t) bs
         ts' = map (\(v,w) -> (rep*v, w)) ts
 
-collapse :: [Bag] -> (Integer, Bag) -> (Integer, Bag)
-collapse bs (i, cs) = foldl replace (i, cs) bs
-
 collapse' :: [Bag] -> (Integer, Bag) -> (Integer, Bag)
 collapse' bs (i, b)
   | b == b'   = (i, b)
   | otherwise = collapse' bs (i', b')
-  where (i', b') = collapse bs (i, b)
-
-helper :: String -> Bag ->  Bool
-helper s (_, cs) = elem s cs'
-  where cs' = map (snd) cs
+  where (i', b') = foldl replace (i, b) bs
 
 upstream :: [Bag] -> String -> [String]
 upstream bs s = map (fst) $ filter (helper s) bs
+  where helper s (_, cs) = elem s $ map (snd) cs
 
 main = do
   putStrLn "Day 7"
@@ -53,4 +46,4 @@ main = do
   let sg = head $ filter (\x -> fst x == "shiny gold") s
   let j = collapse' s (0,sg)
   let k = sum $ map (fst) $ snd $ snd j
-  printSoln 2 ((fst j) + k)
+  printSoln 2 ((fst j))

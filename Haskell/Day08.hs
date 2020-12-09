@@ -27,12 +27,12 @@ tick (acc, ptr, prg, his, code)
   | c == ACC  = (acc + v, succ ptr, prg, his ++ [ptr], CONT)
   | c == JMP  = (acc,     ptr + v,  prg, his ++ [ptr], CONT)
   | c == NOP  = (acc,     succ ptr, prg, his ++ [ptr], CONT)
-  | otherwise = (acc, ptr, prg, his, ERR)
+  | otherwise = (acc,     ptr,      prg, his,          ERR)
   where (c,v) = (prg!!ptr)
 
-tickUntilRep :: Machine -> Machine
-tickUntilRep (acc, ptr, prg, his, code)
-  | code == CONT = tickUntilRep $ tick (acc, ptr, prg, his, code)
+run :: Machine -> Machine
+run (acc, ptr, prg, his, code)
+  | code == CONT = run $ tick (acc, ptr, prg, his, code)
   | otherwise    = (acc, ptr, prg, his, code)
 
 fixProgram :: [Com] -> Int -> [Com]
@@ -45,10 +45,10 @@ main = do
   f <- readFile "../input/input08.txt"
   let s = map (parseInput) $ lines f
 
-  let (acc,_,_,_,_) = tickUntilRep (0,0,s,[],CONT)
+  let (acc,_,_,_,_) = run (0,0,s,[],CONT)
   printSoln 1 acc
 
   let fixed = map (fixProgram s) [0..((length s) - 1)]
-  let fs = map (\x -> tickUntilRep (0,0,x,[],CONT)) fixed
+  let fs = map (\x -> run (0,0,x,[],CONT)) fixed
   let (acc',_,_,_,_) = head $ dropWhile (\(_,_,_,_,c) -> c /= HALT) fs
   printSoln 2 acc'

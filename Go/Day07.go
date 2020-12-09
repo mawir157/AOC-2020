@@ -7,17 +7,6 @@ import (
 	"strings"
 )
 
-func tbg(w int, ss []string, dx int, dy int) (trees int) {
-	trees = 0;
-	for i, y:= 0, 0; i < len(ss); i, y = (i + dx), ((y + dy) % w) {
-		if ss[i][y:(y+1)] == "#" {
-			trees += 1
-		}
-	}
-
-	return
-}
-
 type Pair struct {
 	Name     string
 	Quantity int

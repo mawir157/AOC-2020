@@ -73,16 +73,6 @@ func ParseLineGroups(fname string, sep string) (strs []string, err error) {
 	return strs, nil
 }
 ////////////////////////////////////////////////////////////////////////////////
-// Mimics Haskell's filter function
-func Filter(test func(interface{}) bool, ss []interface{}) (ret []interface{}) {
-	for _, s := range ss {
-		if test(s) {
-			ret = append(ret, s)
-		}
-	}
-	return
-}
-
 // a^b
 func PowInt(a int, b int) (n int) {
 	n = 1
@@ -112,4 +102,20 @@ func ContainsStr(s []string, e string) bool {
 	}
 
 	return false
+}
+
+// returns the maximum and minimum of an array of ints
+func MaxAndMin(arr []int) (max int, min int) {
+	max, min = arr[0], arr[0]
+
+	for _, i := range arr {
+		if i > max {
+			max = i
+		}
+
+		if i < min {
+			min = i
+		}
+	}
+	return
 }

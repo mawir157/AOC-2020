@@ -6,14 +6,6 @@ import qualified Data.Map as Map
 
 type Seen = Map.Map Integer Integer
 
-joltChain :: [Integer] -> ([Integer],[Integer]) -> ([Integer],[Integer])
-joltChain js (diffs, chain)
-  | length cands > 0 = joltChain js (diffs ++ [nx-c], chain ++ [nx])
-  | otherwise        = (diffs ++ [3], chain ++ [c+3])
-  where c     = last chain
-        cands = filter (\x ->  elem x [(c+1)..(c+3)]) js
-        nx    = minimum cands
-
 allJoltChains :: [Integer] -> Integer -> Integer -> Integer
 allJoltChains js to from
   | to - from <= 3 = 1
@@ -31,8 +23,8 @@ main = do
   f <- readFile "../input/input10.txt"
   let js = reverse $ sort $ map (read) $ lines f :: [Integer]
 
-  let (diffs,chain) = joltChain js ([minimum js], [minimum js])
-  printSoln 1 ((length $ filter (3 ==) diffs) * (length $ filter (1 ==) diffs))
+  let d = diff ([3 + maximum js] ++ js ++ [0])
+  printSoln 1 ((length $ filter (3 ==) d) * (length $ filter (1 ==) d))
 
   let s = iterate (routesTo (3 + maximum js)) (js ++ [0], Map.empty)
   let m = snd $ head $ dropWhile (\x -> fst x /= []) s

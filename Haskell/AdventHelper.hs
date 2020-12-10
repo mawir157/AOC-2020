@@ -28,3 +28,8 @@ parseLineGroups _ [] = []
 parseLineGroups c ss = [(concat' b c)] ++ (parseLineGroups c ss')
   where b = takeWhile (\l -> length l > 0) ss
         ss' = drop 1 $ dropWhile (\l -> length l > 0) ss
+
+
+diff :: [Integer] -> [Integer]
+diff [x] = []
+diff (x:y:xs) = [(x-y)] ++ diff (y:xs)

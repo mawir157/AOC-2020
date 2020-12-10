@@ -23,7 +23,7 @@ allJoltChains js to from
 routesTo :: Integer -> ([Integer], Seen) -> ([Integer], Seen)
 routesTo to ((j:js), seen)
   | to - j <= 3 = (js, (Map.insert j 1 seen))
-  | otherwise   = (js, (Map.insert j sum t seen))
+  | otherwise   = (js, (Map.insert j (sum t) seen))
   where t = filter (/= (-1)) $ map (\x -> Map.findWithDefault (-1) x seen) [(j+1)..(j+3)]
 
 main = do

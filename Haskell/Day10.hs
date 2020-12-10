@@ -6,12 +6,6 @@ import qualified Data.Map as Map
 
 type Seen = Map.Map Integer Integer
 
-allJoltChains :: [Integer] -> Integer -> Integer -> Integer
-allJoltChains js to from
-  | to - from <= 3 = 1
-  | otherwise      = sum $ map (allJoltChains js to) cands
-  where cands = intersect js [(from+1)..(from+3)]
-
 routesTo :: Integer -> ([Integer], Seen) -> ([Integer], Seen)
 routesTo to ((j:js), seen)
   | to - j <= 3 = (js, (Map.insert j 1 seen))

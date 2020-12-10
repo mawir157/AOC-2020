@@ -20,13 +20,11 @@ allJoltChains js to from
   | otherwise      = sum $ map (allJoltChains js to) cands
   where cands = intersect js [(from+1)..(from+3)]
 
-routesTo' :: Integer -> ([Integer], Seen) -> ([Integer], Seen)
-routesTo' to ((j:js), seen)
+routesTo :: Integer -> ([Integer], Seen) -> ([Integer], Seen)
+routesTo to ((j:js), seen)
   | to - j <= 3 = (js, (Map.insert j 1 seen))
-  | otherwise   = (js, (Map.insert j s seen))
-  where cands = [(j+1)..(j+3)]
-        t = filter (/= (-1)) $ map (\x -> Map.findWithDefault (-1) x seen) cands
-        s = sum t
+  | otherwise   = (js, (Map.insert j sum t seen))
+  where t = filter (/= (-1)) $ map (\x -> Map.findWithDefault (-1) x seen) [(j+1)..(j+3)]
 
 main = do
   putStrLn "Day 10"
@@ -36,6 +34,6 @@ main = do
   let (diffs,chain) = joltChain js ([minimum js], [minimum js])
   printSoln 1 ((length $ filter (3 ==) diffs) * (length $ filter (1 ==) diffs))
 
-  let s = iterate (routesTo' (3 + maximum js)) (js ++ [0], Map.empty)
+  let s = iterate (routesTo (3 + maximum js)) (js ++ [0], Map.empty)
   let m = snd $ head $ dropWhile (\x -> fst x /= []) s
   printSoln 2 (fromJust $ Map.lookup 0 m)

@@ -6,8 +6,8 @@ import (
 	"sort"
 )
 
-func Jumps(jolts []int) (ones int, threes int) {
-	ones, threes = 0, 1 // we know the final jump will be three
+func Jumps(jolts []int) (answer int) {
+	ones, threes := 0, 1 // we know the final jump will be three
 
 	for i := 0; i < len(jolts) - 1; i++ {
 		if jolts[i] - jolts[i+1] == 1 {
@@ -17,7 +17,7 @@ func Jumps(jolts []int) (ones int, threes int) {
 		}
 	}
 
-	return 
+	return ones * threes
 }
 
 func RoutesTo(jolts []int) (routes int) {
@@ -39,9 +39,8 @@ func main() {
 	js, _ := Helper.ReadIntFile("../input/input10.txt")
 	sort.Sort(sort.Reverse(sort.IntSlice(js))) // this is the way
 	js = append(js, 0)
-	ones, threes := Jumps(js)
 
-	Helper.PrintSoln(10, ones*threes, RoutesTo(js))
+	Helper.PrintSoln(10, Jumps(js), RoutesTo(js))
 
 	return
 }

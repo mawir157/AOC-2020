@@ -8,15 +8,14 @@ const (
 	Open	Code = iota
 	Full
 	Void
-	OoB
 )
 
 type Pos struct {
 	X, Y int
 }
 
-var	dirs [8]Pos = [8]Pos{ {X:-1, Y:-1}, {X:-1, Y:0},  {X:-1, Y:1}, {X: 0, Y:-1},
-                          {X:0,  Y:1},  {X: 1, Y:-1}, {X: 1, Y:0}, {X:1,  Y:1} }
+var	dirs [8]Pos = [8]Pos{ {X:-1, Y:-1}, {X:-1, Y:0},  {X:-1, Y:1}, {X:0, Y:-1},
+                          {X:0, Y:1},   {X: 1, Y:-1}, {X: 1, Y:0}, {X:1, Y:1} }
 
 func BuildSeatMap (ss []string) (seats map[Pos]Code, filled int) {
 	seats = make(map[Pos]Code)

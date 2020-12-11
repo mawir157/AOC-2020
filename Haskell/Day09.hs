@@ -5,7 +5,7 @@ block size is offset = (take size $ drop offset is,
                         head $ drop (offset+ size) is)
 
 test :: ([Integer], Integer) -> Bool
-test ([x], n) = False
+test ([_], _) = False
 test ((x:xs), n)
   | elem (n - x) xs = True
   | otherwise       = test (xs, n)

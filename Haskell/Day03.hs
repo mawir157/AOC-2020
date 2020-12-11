@@ -1,7 +1,5 @@
 import AdventHelper
 
-import Data.List
-
 tbg :: Int -> [String] -> Int -> (Int, Int) -> Int
 tbg _ [] _ _ = 0
 tbg w (s:ss) y (dx, dy) = tree + (tbg w ss' y' (dx,dy))

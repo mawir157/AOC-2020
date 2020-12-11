@@ -6,6 +6,7 @@ import Data.List.Split
 import Text.Regex.TDFA
 import Text.Regex.TDFA.Text ()
 
+complete :: [String]
 complete = ["byr","cid","ecl","eyr","hcl","hgt","iyr","pid"]
 
 checkId1 :: String -> Bool
@@ -27,7 +28,7 @@ checkUnit ("hgt",v) = v =~ "(59in|6[0-9]in|7[0-6]in|1[5-8][0-9]cm|19[0-3]cm)"
 checkUnit ("hcl",v) = v =~ "^#([0-9a-f]){6}$"
 checkUnit ("ecl",v) = v =~ "(amb|blu|brn|gry|grn|hzl|oth)"
 checkUnit ("pid",v) = v =~ "^([0-9]){9}$"
-checkUnit ("cid",v) = True
+checkUnit ("cid",_) = True
 checkUnit otherwise = error "Unidentified category"
 
 main = do

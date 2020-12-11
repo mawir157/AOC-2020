@@ -14,14 +14,14 @@ parsePM (s:ss) = (if' (s == '-') (-1) 1) * (read ss :: Int)
 
 parseInput :: String -> Com
 parseInput s
-  | ss!! 0 == "acc" = (ACC, v)
-  | ss!! 0 == "jmp" = (JMP, v)
-  | ss!! 0 == "nop" = (NOP, v)
+  | ss!!0 == "acc" = (ACC, v)
+  | ss!!0 == "jmp" = (JMP, v)
+  | ss!!0 == "nop" = (NOP, v)
   where ss = splitOn " " s
         v = parsePM (ss!!1)
 
 tick :: Machine -> Machine
-tick (acc, ptr, prg, his, code)
+tick (acc, ptr, prg, his, _)
   | elem ptr his = (acc, ptr, prg, his, LOOP)
   | ptr >= length prg || ptr < 0 = (acc, ptr, prg, his, HALT)
   | c == ACC  = (acc + v, succ ptr, prg, his ++ [ptr], CONT)

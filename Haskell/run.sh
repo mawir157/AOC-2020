@@ -9,7 +9,7 @@ if [ $day -gt 0 ]
 then
 	if test -f Day$day.hs;
 	then
-		ghc Day$day.hs -O2
+		ghc Day$day.hs -O2 -Wall
 		./Day$day
 		rm Day$day.hi
 		rm Day$day.o

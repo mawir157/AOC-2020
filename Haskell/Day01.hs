@@ -1,15 +1,15 @@
 import AdventHelper
 
 sum_and_prod :: Integer -> [(Integer, Integer)] -> [(Integer, Integer)] -> [(Integer, Integer)]
-sum_and_prod _ [x] _ = []
+sum_and_prod _ [_] _ = []
 sum_and_prod t (x:xs) ys = q ++ (sum_and_prod t xs ys)
   where q = map (\(s',p') -> ((fst x)+s', (snd x)*p')) ys
 
 main = do
   putStrLn "Day 1"
   f <- readFile "../input/input01.txt"
-  let s = map(read) $ lines f :: [Integer]
-  let p0 = zip s s
+  let ss = map(read) $ lines f :: [Integer]
+  let p0 = zip ss ss
   let t = 2020
 
   let p1 = sum_and_prod t p0 p0

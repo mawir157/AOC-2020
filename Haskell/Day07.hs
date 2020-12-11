@@ -8,13 +8,13 @@ type Bag = (String, [(Integer, String)])
 parseInput :: String -> (String, [(Integer, String)])
 parseInput s = ((a++" "++c), parseChildren cs)
  where [p,cs] = splitOn " contain " s
-       [a,c,b] = splitOn " " p
+       [a,c,_] = splitOn " " p
 
 parseChildren :: String -> [(Integer, String)]
 parseChildren "no other bags." = []
 parseChildren "" = []
 parseChildren s = [(n, (a++" "++c))] ++ parseChildren next
-  where [i,a,c,b] = splitOn " " $ takeWhile (/= ',') s
+  where [i,a,c,_] = splitOn " " $ takeWhile (/= ',') s
         n = read i :: Integer
         next = drop 2 $ dropWhile (/= ',') s
 
@@ -34,7 +34,7 @@ collapse' bs (i, b)
 
 upstream :: [Bag] -> String -> [String]
 upstream bs s = map (fst) $ filter (helper s) bs
-  where helper s (_, cs) = elem s $ map (snd) cs
+  where helper s' (_, cs) = elem s' $ map (snd) cs
 
 main = do
   putStrLn "Day 7"
@@ -45,5 +45,4 @@ main = do
 
   let sg = head $ filter (\x -> fst x == "shiny gold") s
   let j = collapse' s (0,sg)
-  let k = sum $ map (fst) $ snd $ snd j
   printSoln 2 ((fst j))

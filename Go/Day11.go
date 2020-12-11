@@ -27,7 +27,6 @@ func BuildSeatMap (ss []string) (seats map[Pos]Code, filled int) {
 				case '#': seats[Pos{X:i, Y:j}] = Full; filled++
 				case 'L': seats[Pos{X:i, Y:j}] = Open
 			}
-
 		}
 	}
 	return
@@ -56,18 +55,18 @@ func Update(seats map[Pos]Code, sight int, threshold int) (newSeats map[Pos]Code
 	for pos, status := range seats {
 		nbrs := 0
 		for _, d := range dirs {
-				nbrs += LookInDir(seats, pos, d, sight)
+			nbrs += LookInDir(seats, pos, d, sight)
 		}
 
 		switch status {
 			case Void: newSeats[pos] = Void
-			case Full: 
+			case Full:
 				if nbrs >= threshold {
 					newSeats[pos] = Open
 				} else {
 					newSeats[pos] = Full; filled++
 				}
-			case Open: 
+			case Open:
 				if nbrs == 0 {
 					newSeats[pos] = Full; filled++
 				} else {

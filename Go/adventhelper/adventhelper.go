@@ -119,3 +119,25 @@ func MaxAndMin(arr []int) (max int, min int) {
 	}
 	return
 }
+
+// Head
+func FirstRune(str string) (r rune) {
+  for _, r = range str {
+      return
+  }
+  return
+}
+
+// Tail
+func TrimFirstRune(s string) string {
+	rs := []rune(s)
+  return string(rs[1:])
+}
+
+// Not defined in math!
+func AbsInt(i int) int {
+	if (i < 0) {
+		return - i
+	}
+	return i
+}

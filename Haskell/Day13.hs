@@ -29,7 +29,7 @@ firstBus strt bs = minPair $ zip delays bs
         delays = zipWith subtract mds bs
 
 main = do
-  putStrLn "Day 10"
+  putStrLn "Day 13"
   f <- readFile "../input/input13.txt"
   let ss = lines f
   let now = read (head ss) :: Integer

@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 import (
 	"sort"
@@ -36,11 +36,11 @@ func RoutesTo(jolts []int) (routes int) {
 }
 
 func main() {
-	js, _ := Helper.ReadIntFile("../input/input10.txt")
+	js, _ := AH.ReadIntFile("../input/input10.txt")
 	sort.Sort(sort.Reverse(sort.IntSlice(js))) // this is the way
 	js = append(js, 0)
 
-	Helper.PrintSoln(10, Jumps(js), RoutesTo(js))
+	AH.PrintSoln(10, Jumps(js), RoutesTo(js))
 
 	return
 }

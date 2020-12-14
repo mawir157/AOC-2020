@@ -171,3 +171,15 @@ func AbsInt(i int) int {
 	}
 	return i
 }
+
+// Sets the bit at pos in the integer n.
+func SetBit(n int, pos uint) int {
+	n |= (1 << pos)
+	return n
+}
+
+// Sets the bit at pos in the integer n.
+func ClearBit(n int, pos uint) int {
+	n &^= (1 << pos)
+	return n
+}

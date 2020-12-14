@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 import (
 	"strconv"
@@ -56,7 +56,7 @@ func part1(bs []Bag, targets []string) (int) {
 		up := mapUpstream(bs, temp)
 
 		for _, e := range up {
-			if !Helper.ContainsStr(parents, e) {
+			if !AH.ContainsStr(parents, e) {
 				parents = append(parents, e)
 			}
 		}
@@ -74,7 +74,7 @@ func mapUpstream(bs []Bag, targets []string) ([]string) {
 	for _, t := range targets {
 		temp := upstream(bs, t)
 		for _, e := range temp {
-			if !Helper.ContainsStr(contains, e) {
+			if !AH.ContainsStr(contains, e) {
 				contains = append(contains, e)
 			}
 		}
@@ -126,7 +126,7 @@ func part2(bags []Bag, counter int, top Bag) (newCounter int) {
 }
 
 func main() {
-	ss, _ := Helper.ReadStrFile("../input/input07.txt")
+	ss, _ := AH.ReadStrFile("../input/input07.txt")
 
 	bags := make([]Bag, 0, len(ss))
 	var sg Bag
@@ -138,7 +138,7 @@ func main() {
 		}
 	}
 
-	Helper.PrintSoln(7, part1(bags, []string{"shiny gold"}),
+	AH.PrintSoln(7, part1(bags, []string{"shiny gold"}),
 	                                part2(bags, 0, sg))
 
 	return

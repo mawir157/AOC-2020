@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 import (
 	"strconv"
@@ -22,8 +22,8 @@ type Robot struct {
 }
 
 func ParseLine (ss string) (i Instruction) {
-	r  := Helper.FirstRune(ss)
-	rs := Helper.TrimFirstRune(ss)
+	r  := AH.FirstRune(ss)
+	rs := AH.TrimFirstRune(ss)
 	n, _ := strconv.Atoi(rs)
 
 	if r == rune('L') || r == rune('R') {
@@ -81,11 +81,11 @@ func (rbt *Robot) MoveAlt(ins Instruction) () {
 }
 
 func (rbt Robot) ManDis() (distance int) {
-	return Helper.AbsInt(rbt.Locn.X) + Helper.AbsInt(rbt.Locn.Y)
+	return AH.AbsInt(rbt.Locn.X) + AH.AbsInt(rbt.Locn.Y)
 }
 
 func main() {
-	ss, _ := Helper.ReadStrFile("../input/input12.txt")
+	ss, _ := AH.ReadStrFile("../input/input12.txt")
 
 	var is []Instruction
 	for _, s := range ss {
@@ -102,7 +102,7 @@ func main() {
 		lexx.MoveAlt(ins)
 	}
 
-	Helper.PrintSoln(12, starbug.ManDis(), lexx.ManDis())
+	AH.PrintSoln(12, starbug.ManDis(), lexx.ManDis())
 
 	return
 }

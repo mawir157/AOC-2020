@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func tbg(w int, ss []string, dx int, dy int) (trees int) {
 	trees = 0;
@@ -14,7 +14,7 @@ func tbg(w int, ss []string, dx int, dy int) (trees int) {
 }
 
 func main() {
-	mnt, _ := Helper.ReadStrFile("../input/input03.txt")
+	mnt, _ := AH.ReadStrFile("../input/input03.txt")
 	w  := len(mnt[0])
 	t1 := tbg(w, mnt, 1,1)
 	t2 := tbg(w, mnt, 1,3)
@@ -22,7 +22,7 @@ func main() {
 	t4 := tbg(w, mnt, 1,7)
 	t5 := tbg(w, mnt, 2,1)
 
-	Helper.PrintSoln(3, t2, t1*t2*t3*t4*t5)
+	AH.PrintSoln(3, t2, t1*t2*t3*t4*t5)
 
 	return
 }

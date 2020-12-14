@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func CheckString(str string) (ok1 bool, ok2 bool) {
 	parts := strings.Split(str, " ")
@@ -37,10 +37,10 @@ func Count(pws []string) (count1 int, count2 int) {
 }
 
 func main() {
-	strs, _ := Helper.ReadStrFile("../input/input02.txt")
+	strs, _ := AH.ReadStrFile("../input/input02.txt")
 	p1, p2 := Count(strs)
 
-	Helper.PrintSoln(2, p1, p2)
+	AH.PrintSoln(2, p1, p2)
 
 	return
 }

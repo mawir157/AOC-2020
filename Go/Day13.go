@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 import (
 	"strconv"
@@ -57,11 +57,11 @@ func part2(pairs []Pair) (int) {
 }
 
 func main() {
-	ss, _ := Helper.ReadStrFile("../input/input13.txt")
+	ss, _ := AH.ReadStrFile("../input/input13.txt")
 	now, _ := strconv.Atoi(ss[0])
 	pairs := ParseLine(ss[1])
 
-	Helper.PrintSoln(13, part1(now, pairs), part2(pairs))
+	AH.PrintSoln(13, part1(now, pairs), part2(pairs))
 
 	return
 }

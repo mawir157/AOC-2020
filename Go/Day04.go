@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func checkId(s string) (part1 bool, part2 bool) {
 	part1 = true
@@ -56,7 +56,7 @@ func checkId(s string) (part1 bool, part2 bool) {
 }
 
 func main() {
-	ss, _ := Helper.ParseLineGroups("../input/input04.txt", " ")
+	ss, _ := AH.ParseLineGroups("../input/input04.txt", " ")
 
 	part1 := 0
 	part2 := 0
@@ -70,7 +70,7 @@ func main() {
 		}
 	}
 
-	Helper.PrintSoln(4, part1, part2)
+	AH.PrintSoln(4, part1, part2)
 
 	return
 }

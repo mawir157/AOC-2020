@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 import (
 	"strconv"
@@ -41,7 +41,7 @@ func (m Machine) at() (Command) {
 func (m *Machine) tick() (exitCode int) {
 	if m.Pointer >= len(m.Program) || m.Pointer < 0 {
 		return 1 // the pointer is Out of Bounds
-	} else if Helper.ContainsInt(m.History, m.Pointer) {
+	} else if AH.ContainsInt(m.History, m.Pointer) {
 		return -1 // we've enetered an infinite loop
 	} else { // we are expecting a valid instruction
 		ins := m.at().Instruction
@@ -80,7 +80,7 @@ func parseLine(s string) (com Command) {
 }
 
 func main() {
-	ss, _ := Helper.ReadStrFile("../input/input08.txt")
+	ss, _ := AH.ReadStrFile("../input/input08.txt")
 	part1 := 0
 	part2 := 0
 
@@ -116,7 +116,7 @@ func main() {
 		}
 	}
 
-	Helper.PrintSoln(8, part1, part2)
+	AH.PrintSoln(8, part1, part2)
 
 	return
 }

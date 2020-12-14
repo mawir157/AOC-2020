@@ -5,13 +5,13 @@ import (
 	"strings"
 )
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func getSeat(ones string, s string, l int) (n int) {
 	n = 0
 	for i, c := range s {
 		if strings.Contains(ones, string(c)) {
-			n += Helper.PowInt(2, l - 1 - i)
+			n += AH.PowInt(2, l - 1 - i)
 		}
 	}
 	return
@@ -27,14 +27,14 @@ func missing(is []int) (n int) {
 }
 
 func main() {
-	ss, _ := Helper.ReadStrFile("../input/input05.txt")
+	ss, _ := AH.ReadStrFile("../input/input05.txt")
 	var seats []int
 	for _,s := range(ss) {
 		seats = append(seats, getSeat("BR", s, 10))
 	}
 	sort.Ints(seats[:])
 
-	Helper.PrintSoln(5, seats[len(seats) - 1], missing(seats))
+	AH.PrintSoln(5, seats[len(seats) - 1], missing(seats))
 
 	return
 }

@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 type Code int
 
@@ -90,10 +90,10 @@ func UpdateUntilStable(seats map[Pos]Code, prev int, sight int, threshold int) (
 }
 
 func main() {
-	js, _ := Helper.ReadStrFile("../input/input11.txt")
+	js, _ := AH.ReadStrFile("../input/input11.txt")
 	seats, filled := BuildSeatMap(js)
 
-	Helper.PrintSoln(11, UpdateUntilStable(seats, filled, 1, 4),
+	AH.PrintSoln(11, UpdateUntilStable(seats, filled, 1, 4),
 	                     UpdateUntilStable(seats, filled, 1000, 5))
 
 	return

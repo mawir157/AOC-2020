@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func test(arr []int, offset int, size int) (bool) {
 	if len(arr) < offset + size + 1 {
@@ -35,7 +35,7 @@ func findRange(arr []int, target int, blocksize int) ([]int) {
 }
 
 func main() {
-	is, _ := Helper.ReadIntFile("../input/input09.txt")
+	is, _ := AH.ReadIntFile("../input/input09.txt")
 	size := 117
 
 	var part1 int
@@ -45,9 +45,9 @@ func main() {
 			break
 		}
 	}
-	max, min := Helper.MaxAndMin(findRange(is, part1, 2))
+	max, min := AH.MaxAndMin(findRange(is, part1, 2))
 
-	Helper.PrintSoln(9, part1, max + min)
+	AH.PrintSoln(9, part1, max + min)
 
 	return
 }

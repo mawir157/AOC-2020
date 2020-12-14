@@ -1,6 +1,6 @@
 package main
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func part1(v []int, t int) int {
 	for r, i := range v {
@@ -32,9 +32,9 @@ func part2(v []int, t int) int {
 }
 
 func main() {
-	ints, _ := Helper.ReadIntFile("../input/input01.txt")
+	ints, _ := AH.ReadIntFile("../input/input01.txt")
 
-	Helper.PrintSoln(1, part1(ints, 2020), part2(ints, 2020))
+	AH.PrintSoln(1, part1(ints, 2020), part2(ints, 2020))
 
 	return
 }

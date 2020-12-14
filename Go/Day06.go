@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-import Helper "./adventhelper"
+import AH "./adventhelper"
 
 func eachAnswer(ss string, split string) (n int, n2 int) {
 	count := make(map[string]int)
@@ -27,7 +27,7 @@ func eachAnswer(ss string, split string) (n int, n2 int) {
 }
 
 func main() {
-	ss, _ := Helper.ParseLineGroups("../input/input06.txt", ":")
+	ss, _ := AH.ParseLineGroups("../input/input06.txt", ":")
 
 	part1 := 0
 	part2 := 0
@@ -37,7 +37,7 @@ func main() {
 		part2 += v2
 	}
 
-	Helper.PrintSoln(6, part1, part2)
+	AH.PrintSoln(6, part1, part2)
 
 	return
 }

@@ -14,6 +14,8 @@ then
 		rm Day$day.hi
 		rm Day$day.o
 		rm Day$day
+		rm -f AdventHelper.hi
+		rm -f AdventHelper.o
 	else
 		echo "Day " $day " does not exist"
 	fi
@@ -37,6 +39,8 @@ else
 			fi
 		fi
 	done
+	rm -f AdventHelper.hi
+	rm -f AdventHelper.o
 	if [ "$missing" != "" ]
 	then
 		echo "Missing days = ["$missing"]"

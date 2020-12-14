@@ -25,16 +25,15 @@ func ParseLine (ss string) (pairs []Pair) {
 }
 
 func part1(now int, pairs []Pair) (int) {
-	earliest, bestscore := 1000, 0
+	best := Pair{A:1000, P:0}
 	for _, pair := range pairs {
 		m := pair.P - (now % pair.P) 
-		if m < earliest {
-			earliest = m
-			bestscore = pair.P
+		if m < best.A {
+			best = Pair{A:m, P:pair.P}
 		}
 	}
 
-	return (earliest * bestscore)
+	return (best.A * best.P)
 }
 
 func ChiRemThm(p1 Pair, p2 Pair) (Pair) {
@@ -44,6 +43,7 @@ func ChiRemThm(p1 Pair, p2 Pair) (Pair) {
 			return Pair{A:c, P:(p1.P*p2.P)}
 		}
 	}
+
 	return Pair{A:0, P:1} // can never be hit but we can't compile without it!
 }
 

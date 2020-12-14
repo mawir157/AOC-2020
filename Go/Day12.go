@@ -16,9 +16,9 @@ type Pos struct {
 }
 
 type Robot struct {
-	Locn  Pos
-	Dirn int
-	WayPnt  Pos
+	Locn   Pos
+	Dirn   int
+	WayPnt Pos
 }
 
 func ParseLine (ss string) (i Instruction) {

@@ -134,6 +134,36 @@ func TrimFirstRune(s string) string {
   return string(rs[1:])
 }
 
+// Init
+func TrimLastRune(s string) string {
+	l := len(s)
+	rs := []rune(s)
+  return string(rs[:(l-1)])
+}
+
+// Drop
+func Drop(s string, n int) string {
+	rs := []rune(s)
+  return string(rs[n:])
+}
+
+// Take
+func Take(s string, n int) string {
+	rs := []rune(s)
+  return string(rs[:n])
+}
+
+// Reverse A String!
+func ReverseString(s string) string {
+	n := len(s)
+	runes := make([]rune, n)
+	for _, rune := range s {
+	 	n--
+		runes[n] = rune
+	}
+	return string(runes[n:])
+}
+
 // Not defined in math!
 func AbsInt(i int) int {
 	if (i < 0) {

@@ -6,7 +6,7 @@ import Data.Maybe
 type Game = Map.Map Int [Int]
 
 history :: [Int] -> [Int] -> [Int]
-history new old = new ++ take 1 old
+history new old = new ++ (take 1 old)
 
 tick :: (Game, Int, Int) -> (Game, Int, Int)
 tick (gm, turn, prev) = (gm', turn+1, cur)
@@ -17,8 +17,7 @@ tick (gm, turn, prev) = (gm', turn+1, cur)
 playUntil :: Int -> (Game, Int, Int) -> (Game, Int, Int)
 playUntil n (gm, turn, prev)
   | turn >  n = (gm, turn, prev)
-  | otherwise = playUntil n $! next
-  where next = tick (gm, turn, prev)
+  | otherwise = playUntil n $! tick (gm, turn, prev)
 
 shatter :: [a] -> [[a]]
 shatter = foldr (\ x -> (++) [[x]]) []

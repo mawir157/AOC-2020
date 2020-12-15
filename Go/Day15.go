@@ -18,7 +18,7 @@ func playGame(game map[int]int, n int, seen bool, turns int, offset int) (next i
 	for turn := offset; turn <= turns; turn++ {
 		if seen {
  			next = turn - game[n] - 1
-		} else { // if not say zero
+		} else {
 			next = 0
 		}
 		_, seen = game[next]
@@ -34,13 +34,14 @@ func main() {
 
 	q := MakeGameState(input15)
 	init := 0
-	if _, ok := q[0]; ok {
+	_, seenZero := q[0]
+	if seenZero {
 		init = input15[len(input15) - 1]
 	}
-	s := playGame(q, init, false, 2020, len(input15) + 1)
+	s := playGame(q, init, seenZero, 2020, len(input15) + 1)
 
 	q = MakeGameState(input15) // need to reset the map
-	t := playGame(q, init, false, 30000000, len(input15) + 1)
+	t := playGame(q, init, seenZero, 30000000, len(input15) + 1)
 
 	AH.PrintSoln(15, s, t)
 

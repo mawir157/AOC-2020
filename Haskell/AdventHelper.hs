@@ -10,11 +10,10 @@ if' True  x _ = x
 if' False _ y = y
 
 zipWithFn :: (a -> b) -> [a] -> [(a,b)]
-zipWithFn fn as  = zip as (map (fn) as)
+zipWithFn fn as  = zip as (map fn as)
 
 printSoln :: (Show a) => Integer -> a -> IO()
-printSoln n s = do
-  putStrLn ("  Part " ++ (show n) ++ ": " ++ (show s))
+printSoln n s = putStrLn ("  Part " ++ show n ++ ": " ++ show s)
 
 tuplify2 :: [a] -> (a,a)
 tuplify2 [x,y] = (x,y)
@@ -26,15 +25,15 @@ concat' (s:ss) c  = s ++ c ++ concat' ss c
 
 parseLineGroups :: String -> [String] -> [String]
 parseLineGroups _ [] = []
-parseLineGroups c ss = [(concat' b c)] ++ (parseLineGroups c ss')
-  where b = takeWhile (\l -> length l > 0) ss
-        ss' = drop 1 $ dropWhile (\l -> length l > 0) ss
+parseLineGroups c ss = [concat' b c] ++ (parseLineGroups c ss')
+  where b = takeWhile (not . null) ss
+        ss' = drop 1 $ dropWhile (not . null) ss
 
 
 diff :: [Integer] -> [Integer]
 diff [] = error "Diff of single element is nonsensical"
 diff [_] = []
-diff (x:y:xs) = [(x-y)] ++ diff (y:xs)
+diff (x:y:xs) = (x - y) : diff (y : xs)
 
 minPair :: (Ord a) => [(a,b)] -> (a,b)
 minPair [] = error "Empty List"

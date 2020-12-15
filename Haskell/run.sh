@@ -9,7 +9,7 @@ if [ $day -gt 0 ]
 then
 	if test -f Day$day.hs;
 	then
-		ghc Day$day.hs -O2 -Wall -XBangPatterns
+		ghc Day$day.hs -O2 -Wall
 		./Day$day
 		rm Day$day.hi
 		rm Day$day.o
@@ -25,7 +25,7 @@ else
 	do
 		if test -f Day$i.hs;
 		then
-			ghc Day$i.hs -O2 -XBangPatterns > /dev/null
+			ghc Day$i.hs -O2 > /dev/null
 			./Day$i
 			rm Day$i.hi
 			rm Day$i.o

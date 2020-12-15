@@ -5,6 +5,7 @@ import Data.List.Split
 splitOnAnyOf :: Eq a => [[a]] -> [a] -> [[a]]
 splitOnAnyOf ds xs = foldl' (\ys d -> ys >>= splitOn d) [xs] ds
 
+if' :: Bool -> a -> a -> a
 if' True  x _ = x
 if' False _ y = y
 
@@ -31,10 +32,12 @@ parseLineGroups c ss = [(concat' b c)] ++ (parseLineGroups c ss')
 
 
 diff :: [Integer] -> [Integer]
-diff [x] = []
+diff [] = error "Diff of single element is nonsensical"
+diff [_] = []
 diff (x:y:xs) = [(x-y)] ++ diff (y:xs)
 
 minPair :: (Ord a) => [(a,b)] -> (a,b)
+minPair [] = error "Empty List"
 minPair [x] = x
 minPair (x:y:xs) = if' (fst x < fst y) (minPair (x:xs)) (minPair (y:xs))
 

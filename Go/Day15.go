@@ -26,19 +26,21 @@ func playGame(game map[int]int, n int, seen bool, turns int, offset int) (next i
 		n = next
 	}
 
-	return n
+	return
 }
 
-// this only works if zero is in the initial input
-// easy to tweak with otherwise
 func main() {
 	input15 := []int{7,14,0,17,11,1,2}
 
 	q := MakeGameState(input15)
-	s := playGame(q, 2, false, 2020, len(input15) + 1)
+	init := 0
+	if _, ok := q[0]; ok {
+		init = input15[len(input15) - 1]
+	}
+	s := playGame(q, init, false, 2020, len(input15) + 1)
 
 	q = MakeGameState(input15) // need to reset the map
-	t := playGame(q, 2, false, 30000000, len(input15) + 1)
+	t := playGame(q, init, false, 30000000, len(input15) + 1)
 
 	AH.PrintSoln(15, s, t)
 

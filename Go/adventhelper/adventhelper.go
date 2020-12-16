@@ -183,3 +183,20 @@ func ClearBit(n int, pos uint) int {
 	n &^= (1 << pos)
 	return n
 }
+
+// returns integer array of all values from max to min inclusie
+func MakeRange(min, max int) []int {
+	a := make([]int, max-min+1)
+	for i := range a {
+		a[i] = min + i
+	}
+	return a
+}
+
+func Concat(arr1, arr2 []int) (out []int) {
+	out = make([]int, len(arr1)+len(arr2))
+	out = append(out, arr1[:]...)
+	out = append(out, arr2[:]...)
+
+	return
+}

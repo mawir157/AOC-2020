@@ -38,15 +38,14 @@ part2 n p
   where p' = reduce p p
 
 main = do
-  putStrLn "Day 13"
+  putStrLn "Day 16"
   f <- readFile "../input/input16.txt"
   let ls = lines f
   let ranges = map parseRange (take 20 ls)
-
-  let near =  map (map read . splitOn ",") (drop 25 ls) :: [[Integer]]
-  let part1 = concatMap (invalidFields ranges) near
-
   let me = map read (splitOn "," (ls !! 22)) :: [Integer]
+  let near =  map (map read . splitOn ",") (drop 25 ls) :: [[Integer]]
+
+  let part1 = concatMap (invalidFields ranges) near
 
   let valid = filter (not . isInvalid ranges) near
   let poss = replicate 20 [0..19] :: [[Int]]

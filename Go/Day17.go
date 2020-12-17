@@ -70,7 +70,7 @@ func tick (space map[Pos]int, dimn int) (newSpace map[Pos]int) {
 		if nCount == 2 || nCount == 3 {
 			newSpace[pos] = 1
 		}
-
+		// now check its neighbours
 		neighbours := pos.nbrs(dimn)
 		for _, nPos := range neighbours {
 			nCount = nPos.nbrsCount(space, dimn) // the number of neighbours

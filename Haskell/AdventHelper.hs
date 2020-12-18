@@ -29,6 +29,15 @@ parseLineGroups c ss = [concat' b c] ++ (parseLineGroups c ss')
   where b = takeWhile (not . null) ss
         ss' = drop 1 $ dropWhile (not . null) ss
 
+readInt :: String -> Integer
+readInt ss = read (takeWhile (`elem` "1234567890") ss) :: Integer
+
+replaceFirst :: String -> String -> String -> String
+replaceFirst _ _ [] = []
+replaceFirst old new ss
+  | take l ss == old = new ++ drop l ss
+  | otherwise        = head ss : replaceFirst old new (tail ss)
+  where l = length old
 
 diff :: [Integer] -> [Integer]
 diff [] = error "Diff of single element is nonsensical"

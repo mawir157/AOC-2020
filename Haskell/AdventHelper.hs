@@ -17,6 +17,7 @@ printSoln n s = putStrLn ("  Part " ++ show n ++ ": " ++ show s)
 
 tuplify2 :: [a] -> (a,a)
 tuplify2 [x,y] = (x,y)
+tuplify2 _ = error "Can't tuplify this array"
 
 concat' :: [[a]] -> [a] -> [a]
 concat' [] _ = []
@@ -25,7 +26,7 @@ concat' (s:ss) c  = s ++ c ++ concat' ss c
 
 parseLineGroups :: String -> [String] -> [String]
 parseLineGroups _ [] = []
-parseLineGroups c ss = [concat' b c] ++ (parseLineGroups c ss')
+parseLineGroups c ss = concat' b c : parseLineGroups c ss' 
   where b = takeWhile (not . null) ss
         ss' = drop 1 $ dropWhile (not . null) ss
 

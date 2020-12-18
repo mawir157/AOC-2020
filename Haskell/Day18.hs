@@ -66,7 +66,7 @@ reduce lr ss
         ext = if' lr (removeLR ss) (removePM ss)
 
 main = do
-  putStrLn "Day 17"
+  putStrLn "Day 18"
   f <- readFile "../input/input18.txt"
   let exps = map (filter (/= ' ')) $ lines f
 

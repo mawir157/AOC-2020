@@ -104,6 +104,17 @@ func ContainsStr(s []string, e string) bool {
 	return false
 }
 
+// does the string s contain e?
+func ContainsChar(s string, r rune) bool {
+	for _, a := range s {
+		if a == r {
+			return true
+		}
+	}
+
+	return false
+}
+
 // returns the maximum and minimum of an array of ints
 func MaxAndMin(arr []int) (max int, min int) {
 	max, min = arr[0], arr[0]

@@ -7,7 +7,6 @@ import Text.Regex.TDFA
 import Text.Regex.TDFA.Text ()
 
 -- Reduces an expression with no brakcets, resolve left to right
--- a1 + a2 * a3 * 
 removeLR :: String -> String
 removeLR ss
   | ss == ss' = ss

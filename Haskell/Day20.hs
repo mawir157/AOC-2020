@@ -3,8 +3,11 @@ import AdventHelper
 import Data.List
 import Data.List.Split
 import qualified Data.Map as Map
-import qualified Data.Set as Set
 import qualified Data.Maybe as Maybe
+import qualified Data.Set as Set
+
+import Text.Regex.TDFA
+import Text.Regex.TDFA.Text ()
 
 type Tile = (Integer, [String])
 
@@ -16,6 +19,7 @@ stringToBin s = bin
   where bin = map (\x -> if' (x == '#') 1 0) s
 
 parseInput :: [String] -> Tile
+parseInput [] = error "Bad Input"
 parseInput (s:ss) = (code, ss)
   where code = read (take 4 $ drop 5 s) :: Integer
 
@@ -38,8 +42,8 @@ tileCode :: Tile -> Integer
 tileCode (code, _) = code
 
 deleteCode :: Tile -> Pieces -> Pieces
-deleteCode t ps = Set.difference ps match
-  where match = Set.filter (\e -> tileCode e == tileCode t) ps
+deleteCode t ps = Set.difference ps mt
+  where mt = Set.filter (\e -> tileCode e == tileCode t) ps
 
 tileData :: Tile -> [String]
 tileData (_, ss) = ss
@@ -68,25 +72,25 @@ joinAbove t1 t2 = (tileCode t1 /= tileCode t2) && (top t1 == bottom t2)
 joinLeft :: Tile -> Tile -> Bool
 joinLeft t1 t2 = (tileCode t1 /= tileCode t2) && (left t1 == right t2)
 
-belowNbrs :: Set.Set Tile -> Tile -> [Tile]
-belowNbrs ts t = filter (joinBelow t) allPerms
+belowNbrs :: Set.Set Tile -> Tile -> Pieces
+belowNbrs ts t = Set.fromList $ filter (joinBelow t) allPerms
   where allPerms = concatMap allIsoms ts
 
-rightNbrs :: Set.Set Tile -> Tile -> [Tile]
-rightNbrs ts t = filter (joinRight t) allPerms
+rightNbrs :: Set.Set Tile -> Tile -> Pieces
+rightNbrs ts t = Set.fromList $ filter (joinRight t) allPerms
   where allPerms = concatMap allIsoms ts
 
-aboveNbrs :: Set.Set Tile -> Tile -> [Tile]
-aboveNbrs ts t = filter (joinAbove t) allPerms
+aboveNbrs :: Set.Set Tile -> Tile -> Pieces
+aboveNbrs ts t = Set.fromList $ filter (joinAbove t) allPerms
   where allPerms = concatMap allIsoms ts
 
-leftNbrs :: Set.Set Tile -> Tile -> [Tile]
-leftNbrs ts t = filter (joinLeft t) allPerms
+leftNbrs :: Set.Set Tile -> Tile -> Pieces
+leftNbrs ts t = Set.fromList $ filter (joinLeft t) allPerms
   where allPerms = concatMap allIsoms ts
 
 countNbrs :: Set.Set Tile -> Tile -> [Int]
-countNbrs ts t =  [length $ belowNbrs ts t, length $ rightNbrs ts t,
-                   length $ aboveNbrs ts t, length $ leftNbrs  ts t]
+countNbrs ts t =  [Set.size $ belowNbrs ts t, Set.size $ rightNbrs ts t,
+                   Set.size $ aboveNbrs ts t, Set.size $ leftNbrs  ts t]
 ---- THIS CAN ALL BE COLLAPSED TO REMOVE DUPLICATION 
 ---- BUT I AM TOO STUPID TO DO THIS ATM
 openRight :: Integer -> Grid -> [(Integer, Integer)]
@@ -102,28 +106,28 @@ openBelow m gr = nxt \\ ky
 addRightInt :: (Grid, Pieces) -> (Integer, Integer) -> (Grid, Pieces)
 addRightInt (gd, ps) (x,y) = (Map.insert (x,y) toAdd gd, deleteCode toAdd ps)
   where nbr = Maybe.fromJust $ Map.lookup (x-1, y) gd
-        toAdd = head $ rightNbrs ps nbr
+        toAdd = Set.elemAt 0 $ rightNbrs ps nbr
 
 addRight :: (Grid, Pieces) -> (Grid, Pieces)
 addRight (gd, ps)
-  | length open /= 0 = addRight $ foldl' addRightInt (gd, ps) open
-  | otherwise = (gd, ps)
-  where open = openRight 12 gd
+  | not (null open) = addRight $ foldl' addRightInt (gd, ps) open
+  | otherwise       = (gd, ps)
+  where open = openRight 12 gd -- TODO
 
 addBelowInt :: (Grid, Pieces) -> (Integer, Integer) -> (Grid, Pieces)
 addBelowInt (gd, ps) (x,y) = (Map.insert (x,y) toAdd gd, deleteCode toAdd ps)
   where nbr = Maybe.fromJust $ Map.lookup (x, y-1) gd
-        toAdd = head $ belowNbrs ps nbr
+        toAdd = Set.elemAt 0 $ belowNbrs ps nbr
 
 addBelow :: (Grid, Pieces) -> (Grid, Pieces)
 addBelow (gd, ps)
-  | length open /= 0 = addBelow $ foldl' addBelowInt (gd, ps) open
-  | otherwise = (gd, ps)
-  where open = openBelow 12 gd
+  | not (null open) = addBelow $ foldl' addBelowInt (gd, ps) open
+  | otherwise       = (gd, ps)
+  where open = openBelow 12 gd -- TODO
 --------------------------------------------------------------------------------
 collapseRow :: Integer -> Grid -> [String]
 collapseRow n gd = collapseHelper tiles
-  where indices = [ (x, n) | x <- [0..11] ]
+  where indices = [ (x, n) | x <- [0..11] ] -- TODO
         tiles = map (\t -> tileData$ Maybe.fromJust $ Map.lookup t gd) indices --[[String]]
 
 collapseHelper :: [[String]] -> [String]
@@ -136,6 +140,26 @@ collapseHelper gr
 glue :: [a] -> [a] -> [a]
 glue s1 s2 = (init s1) ++ (tail s2)
 
+trim :: [String] -> [String]
+trim ss = init $ tail ss'
+  where ss' = map (init . tail) ss
+--------------------------------------------------------------------------------
+dragonAt :: String -> [String] -> Int -> (Int, Int) -> Bool
+dragonAt rgx ss offset (r,c) = check =~ rgx
+  where check = take 20 $ drop c (ss!!(r-offset))
+
+dragonCount :: [String] -> Int
+dragonCount gr = length d1
+  where pairs = [ (r,c) | r <- [2..(length gr - 1)],  c <- [0..(length gr - 1)]]
+        d3 = filter (\p -> dragonAt ".#.{2}#.{2}#.{2}#.{2}#.{2}#.{3}" gr 0 p) pairs
+        d2 = filter (\p -> dragonAt "#.{4}##.{4}##.{4}###" gr 1 p) d3
+        d1 = filter (\p -> dragonAt ".{18}#." gr 2 p) d2
+
+countRough :: [String] -> Int
+countRough [] = 0
+countRough (s:ss) = (length $ filter (== '#') s) + countRough ss
+
+main :: IO ()
 main = do
   putStrLn "Day 20"
   f <- readFile "../input/input20.txt"
@@ -151,20 +175,8 @@ main = do
   let pieces = Set.delete topLeft s -- and remove it from the remaining pieces
 
   -- fill the the top row then fill the columns
-  let (grid', pieces') = addBelow $ addRight (grid, pieces)
-  -- putStrLn $ show grid'
-  -- putStrLn $ show $ Map.map (tileCode) grid
-  -- putStrLn $ show $ Map.map (tileCode) grid'
-  -- putStrLn $ show $ Set.size pieces
-  -- putStrLn $ show $ Set.size pieces'
+  let (grid', _) = addBelow $ addRight (grid, pieces)
+  let pattern = trim $ foldl1 glue $ map (\n -> collapseRow n grid') [0..11] -- TODO
+  let qpat = rotateHelper $ rotateHelper pattern
 
-  let b0 = collapseRow 0 grid'
-  let b1 = collapseRow 1 grid'
-  let pattern = foldl1 glue $ map (\n -> collapseRow n grid') [0..11]
-  -- putStrLn $ show pattern
-  -- putStrLn $ show $ rotateHelper pattern
-  putStrLn $ show $ rotateHelper $ rotateHelper pattern
-  -- putStrLn $ show pattern
-
-
-  printSoln 2 2
+  printSoln 2 ((countRough pattern) - (15 * (dragonCount $ qpat)))

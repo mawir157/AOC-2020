@@ -17,11 +17,9 @@ rotateAfter x xs = drop 1 $ dropWhile (/= x) xs ++ takeWhile (/= x) xs ++ [x]
 tick :: [Int] -> [Int]
 tick v = rotateAfter cur w
   where cur = head v
-        pickUp = take 3 $ drop 1 v
         remaining = cur : drop 4 v
-        dest = maxMod (cur-1) remaining
-        v' = rotateAt dest remaining
-        w = [head v'] ++ pickUp ++ tail v'
+        v' = rotateAt (maxMod (cur-1) remaining) remaining
+        w = [head v'] ++ take 3 (drop 1 v) ++ tail v'
 
 run :: Int -> [Int] -> [Int]
 run 0 xs = xs

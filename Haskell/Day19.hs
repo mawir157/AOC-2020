@@ -6,9 +6,9 @@ import Data.List.Split
 import qualified Data.IntMap as IM
 
 data Rule
-  = Const Char -- single character
+  = Const Char  -- single character
   | Pair [Rule] -- pair of rules
-  | Sing [Int] -- single rule
+  | Sing [Int]  -- single rule
   deriving (Show, Eq, Ord)
 
 eval :: IM.IntMap Rule -> String -> Rule -> [String]
@@ -32,8 +32,8 @@ procString = foldr (\ s -> (++) [map read s :: [Int]]) []
 main = do
   putStrLn "Day 19"
   f <- readFile "../input/input19.txt"
-  let l = take 133 $ lines f
-  let targets = drop 134 $ lines f
+  let l = takeWhile (not . null) $ lines f
+  let targets = drop 1 $ dropWhile (not . null) $ lines f
 
   let rs = IM.fromList $ map parseRule l
 

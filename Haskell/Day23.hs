@@ -1,43 +1,14 @@
 import AdventHelper
 
--- import qualified Data.Map as Map
--- import qualified Data.Bimap as Bimap
 import Data.List
-import qualified Data.Sequence as Seq
+import qualified Data.IntMap.Strict as IM
 import Data.Maybe
 
-import Debug.Trace
-
-type Game = Seq.Seq Int
-
--- maxMod :: Int -> [Int] -> Int
--- maxMod x xs
---   | x `elem` xs = x
---   | otherwise   = maxMod ((x-1) `mod` 10) xs
-
--- -- e.g. rotateAt 5 [1,2,3,4,5,6,7,8,9] = [5,6,7,8,9,1,2,3,4]
--- rotateAt :: (Eq a) => a -> [a] -> [a]
--- rotateAt x xs = dropWhile (/= x) xs ++ takeWhile (/= x) xs
-
--- -- e.g. rotateAt 5 [1,2,3,4,5,6,7,8,9] = [6,7,8,9,1,2,3,4,5]
--- rotateAfter :: (Eq a) => a -> [a] -> [a]
--- rotateAfter x xs = drop 1 $ dropWhile (/= x) xs ++ takeWhile (/= x) xs ++ [x]
-
--- -- we always rotate so that the 0th element is the current
--- tick :: [Int] -> [Int]
--- tick v = rotateAfter cur w
---   where cur = head v
---         remaining = cur : drop 4 v
---         v' = rotateAt (maxMod (cur-1) remaining) remaining
---         w = [head v'] ++ take 3 (drop 1 v) ++ tail v'
-
--- run :: Int -> [Int] -> [Int]
--- run 0 xs = xs
--- run n xs = run (n-1) $ tick xs
+type Game = IM.IntMap Int
 
 buildGame :: Int -> [Int] -> Game
-buildGame size input = Seq.fromList $ input ++ extra
-  where extra = [(length input + 1), (length input + 2)..size]
+buildGame size input = IM.fromList $ zip numbers (drop 1 numbers ++ [head numbers])
+  where numbers = input ++[(length input + 1), (length input + 2)..size]
 
 seqMaxMod :: Int -> Int -> [Int] -> Int
 seqMaxMod m x bad
@@ -45,61 +16,41 @@ seqMaxMod m x bad
   | x `elem` bad = seqMaxMod m (x-1) bad
   | otherwise    = x
 
-seqRotateAfter :: (Eq a) => a -> Seq.Seq a -> Seq.Seq a
-seqRotateAfter x xs = Seq.drop 1 $ Seq.dropWhileL (/= x) xs Seq.><
-                      Seq.takeWhileL (/= x) xs Seq.>< Seq.singleton x
+imTick :: Int -> (Game, Int) -> (Game, Int)
+imTick mx (g, cur) = (g', fromJust $ IM.lookup cur g')
+  where (Just nbr1) = IM.lookup cur g
+        (Just nbr2) = IM.lookup nbr1 g
+        (Just nbr3) = IM.lookup nbr2 g
+        (Just nbr4) = IM.lookup nbr3 g
+        dest = seqMaxMod mx (cur-1) [nbr1, nbr2, nbr3]
+        (Just afterDest) = IM.lookup dest g
+        g' = foldl' (\m (k,v) -> IM.insert k v m) g [(cur, nbr4), (dest, nbr1), (nbr3, afterDest)]
 
-parseToString :: (Show a) => Seq.Seq a -> String
-parseToString Seq.Empty = []
-parseToString (s Seq.:<| ss) = (show s) ++ parseToString ss
+imRun :: Int -> Int -> (Game, Int) -> (Game, Int)
+imRun 0 _ xs = xs
+imRun n m xs = imRun (n - 1) m xs'
+  where xs' = imTick m xs
 
-grabBad :: [Int] -> Game -> [Int]
-grabBad is v = map (\i -> fromJust $ Seq.lookup i v) is
-
-deleteList :: [Int] -> Game -> Game
-deleteList xs g = foldl' (\s x -> Seq.deleteAt x s) g xs
-
-insertInto :: Int -> [Int] -> Game -> Game
-insertInto n xs g = foldl' (\s x -> Seq.insertAt n x s)  g xs
-
-seqTick :: Int -> (Game, Int) -> (Game, Int)
-seqTick m (v, i) = (w, (i' + 1) `mod` m)
-  where nextIs = [mod (i+1) m, mod (i+2) m, mod (i+3) m]
-        curV = fromJust $ Seq.lookup i v
-        moveV = grabBad nextIs v
-        destV = seqMaxMod m (curV-1) moveV
-        v' = deleteList (reverse $ sort nextIs) v
-        destI = fromJust $ Seq.findIndexL (== destV) v'
-        w = insertInto (destI + 1 `mod` m) (reverse moveV) v'
-        i' = fromJust $ Seq.findIndexL (== curV) w
-
-seqRun :: Int -> Int -> (Game, Int) -> (Game, Int)
-seqRun 0 _ xs = xs
-seqRun n m xs
-  | Seq.length (fst xs') == 0 = error "Spurious pattern match"
-  | otherwise                   = seqRun debug m xs'
-  where xs' = seqTick m xs
-        debug = traceShowId (n - 1)
+extract :: Int -> Int -> Game -> String
+extract n i g 
+  | i' == n = ""
+  | otherwise = show i' ++ extract n i' g
+  where (Just i') = IM.lookup i g
 
 part2 :: Game -> Int
 part2 g = val1 * val2
-  where m = Seq.length g
-        oneI = fromJust $ Seq.findIndexL (== 1) g
-        val1 = fromJust $ Seq.lookup ((oneI+1) `mod` m) g
-        val2 = fromJust $ Seq.lookup ((oneI+2) `mod` m) g
+  where (Just val1) = IM.lookup 1 g
+        (Just val2) = IM.lookup val1 g
 
 main :: IO ()
 main = do
   putStrLn "Day 23"
-  let s = [3,8,9,1,2,5,4,6,7]
-  -- let s = [5,2,3,7,6,4,8,1,9]
+  let s = [5,2,3,7,6,4,8,1,9]
 
-  let s1 = buildGame 9 s
-  let k = seqRun 100 (Seq.length s1) (s1, 0)
-  let p1 = read (parseToString $ seqRotateAfter 1 $ fst k) ::Integer
-  printSoln 1 p1
+  let s1' = buildGame 9 s
+  let k = imRun 100 (IM.size s1') (s1', head s)
+  printSoln 1 $ extract 1 1 $ fst k
 
-  -- let s2 = buildGame 10 s
-  -- let k2 = seqRun 10000000 (Seq.length s2) (s2, 0)
-  -- let p2 = part2 $ fst k2
-  -- printSoln 2 p2
+  let s2' = buildGame 1000000 s
+  let k2 = imRun 10000000 (IM.size s2') (s2', head s)
+  printSoln 2 $ part2 $ fst k2

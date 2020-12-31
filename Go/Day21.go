@@ -8,13 +8,13 @@ import (
 )
 
 type Recipe struct {
-	Ingredient	map[string]int
-	Allegerns  	map[string]int
+	Ingredient  map[string]int
+	Allegerns   map[string]int
 }
 
 type Pair struct {
-	Ingredient string
-	Allegern   string
+	Ingredient  string
+	Allegern    string
 }
 
 func parseToRecipe(s string) Recipe {
@@ -66,13 +66,13 @@ func IngredientWithAllegern(rs []Recipe, all string) []string {
 	for _, r := range rs {
 		if _, ok := r.Allegerns[all]; ok {
 			filtered = intersection(filtered, r.Ingredient)
-		}		
+		}
 	}
 
-  unique := make([]string, 0, len(filtered))
-  for key := range filtered {
-    unique = append(unique, key)
-  }
+	unique := make([]string, 0, len(filtered))
+	for key := range filtered {
+		unique = append(unique, key)
+	}
 
 	return unique
 }
@@ -138,9 +138,9 @@ func part1Count(rs []Recipe) (total int, is []string) {
 	}
 
 	is = make([]string, 0, len(unique))
-  for key := range unique {
-    is = append(is, key)
-  }
+	for key := range unique {
+		is = append(is, key)
+	}
 	return
 }
 

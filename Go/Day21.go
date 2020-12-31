@@ -167,6 +167,7 @@ func main() {
 		rs1 = append(rs1, parseToRecipe(s))
 		rs2 = append(rs2, parseToRecipe(s))
 	}
+
 	kill(rs1)
 	count, clean := part1Count(rs1)
 

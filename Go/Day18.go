@@ -14,7 +14,7 @@ func parseLR(exp string) (string) {
 	prevExp := ""
 	re := regexp.MustCompile("[0-9]+[\\*\\+][0-9]+")
 	for {
-		if (exp == prevExp) {
+		if exp == prevExp {
 			break
 		}
 		prevExp = exp
@@ -86,11 +86,11 @@ func parsePM(exp string) (string) {
 }
 
 // find a bracket that does not conatin any other brackets
-func parseBracket(exp string, part1 bool) (string) {
+func parseBracket(exp string, lr bool) (string) {
 	prevExp := ""
 	re := regexp.MustCompile("\\([0-9+*]+\\)")
 	for {
-		if (exp == prevExp) {
+		if exp == prevExp {
 			break
 		}
 		prevExp = exp
@@ -99,7 +99,7 @@ func parseBracket(exp string, part1 bool) (string) {
 		if found != "" {
 			// if so reduce it, based on the rule given in the instructions
 			newValue := ""
-			if part1 {
+			if lr {
 				newValue = parseLR(AH.TrimLastRune(AH.TrimFirstRune(found)))
 			} else {
 				newValue = parsePM(AH.TrimLastRune(AH.TrimFirstRune(found)))
@@ -112,14 +112,12 @@ func parseBracket(exp string, part1 bool) (string) {
 }
 
 func Part1(exp string) (value int) {
-	str1 := parseLR(parseBracket(exp, true))
-	value, _ = strconv.Atoi(str1)
+	value, _ = strconv.Atoi(parseLR(parseBracket(exp, true)))
 	return
 }
 
 func Part2(exp string) (value int) {
-	str1 := parsePM(parseBracket(exp, false))
-	value, _ = strconv.Atoi(str1)
+	value, _ = strconv.Atoi(parsePM(parseBracket(exp, false)))
 	return
 }
 

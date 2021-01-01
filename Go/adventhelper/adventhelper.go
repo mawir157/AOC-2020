@@ -139,6 +139,11 @@ func FirstRune(str string) (r rune) {
   return
 }
 
+// Last
+func FinalRune(str string) string {
+  return str[len(str)-1:]
+}
+
 // Tail
 func TrimFirstRune(s string) string {
 	rs := []rune(s)

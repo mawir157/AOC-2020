@@ -284,7 +284,6 @@ func part2(ss []string) int {
 
 func main() {
 	ss, _ := AH.ReadStrFile("../input/input20.txt")
-	// we need two copies as the functions modify the original!
 	ts := parseInput(ss)
 
 	part1 := 1

@@ -24,6 +24,4 @@ main = do
   let doorLoop = discreteLog 7 doorPub 20201227
 
   printSoln 1 $ modPow cardPub doorLoop 20201227
-  printSoln 2 "I love you."
-
-  putStrLn "See you next year!"
+  printSoln 2 "See you next year, I love you."

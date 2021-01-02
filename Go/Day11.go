@@ -94,7 +94,7 @@ func main() {
 	seats, filled := BuildSeatMap(js)
 
 	AH.PrintSoln(11, UpdateUntilStable(seats, filled, 1, 4),
-	                     UpdateUntilStable(seats, filled, 1000, 5))
+	                 UpdateUntilStable(seats, filled, 1000, 5))
 
 	return
 }

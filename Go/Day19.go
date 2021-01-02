@@ -43,10 +43,8 @@ func parseInput(ss []string) (rs map[int]Rule, ws []string) {
 		if h != rune('a') && h != rune('b') {
 			parts := strings.Split(s, ": ")
 			id,_ := strconv.Atoi(parts[0])
-			// fmt.Println(parts[1])
 
-			if AH.FirstRune(parts[1]) == rune('"') { // 121: "a"
-				// lit := AH.TrimFirstRune(parts[1])
+			if AH.FirstRune(parts[1]) == rune('"') {
 				lit := string(parts[1][1])
 				rs[id] = Rule{Mode:Literal, Lit:lit}
 			} else {

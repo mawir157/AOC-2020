@@ -10,6 +10,7 @@ import (
 type Tile struct {
 	Id       int
 	Pattern  []string
+	NbrIds   []int
 }
 
 type Pos struct {
@@ -89,8 +90,9 @@ func (t* Tile) flip() {
 	t.Pattern = newPattern
 }
 
-func parseInput(ss []string) []Tile {
-	tiles := []Tile{}
+func parseInput(ss []string) map[int]Tile {
+	// tiles := []Tile{}
+	tiles := make(map[int]Tile)
 
 	for i := 0; i < len(ss); i++ {
 		header := AH.TrimLastRune(AH.Drop(ss[i], 5))
@@ -103,12 +105,12 @@ func parseInput(ss []string) []Tile {
 			pattern = append(pattern, ss[i])
 		}
 
-		tiles = append(tiles, Tile{Id:n, Pattern:pattern})
+		tiles[n] = Tile{Id:n, Pattern:pattern}
 	}
 	return tiles
 }
 
-func countSingle(tile1 Tile, tile2 Tile, d Dir) (count int, piece Tile) {
+func countSingle(tile1 *Tile, tile2 Tile, d Dir) (count int, piece Tile) {
 	count = 0
 	toMatch := tile1.side(d)
 	dr := opp(d)
@@ -126,54 +128,77 @@ func countSingle(tile1 Tile, tile2 Tile, d Dir) (count int, piece Tile) {
 		}
 		tile2.rotate()
 	}
-	return 0, tile1
+	return 0, tile2
 }
 
-func countNbrs(allTiles []Tile, tile Tile) (u int, l int, b int, r int) {
+func countNbrs(allTiles map[int]Tile, tile *Tile, add bool) (u int, l int, b int, r int) {
 	u, l, b, r = 0, 0, 0, 0
-	for _, t := range allTiles {
-		if tile.Id == t.Id { // a tile connot neighbour itself
+	for id, t := range allTiles {
+		if tile.Id == id { // a tile connot neighbour itself
 			continue
 		}
+
 		u1, _ := countSingle(tile, t, Top)
-		u += u1
+		if u1 > 0 {
+			u += u1
+			if add {
+				tile.NbrIds = append(tile.NbrIds, id)
+			}
+		}
+
 		l1, _ := countSingle(tile, t, Left)
-		l += l1
+		if l1 > 0 {
+			l += l1
+			if add {
+				tile.NbrIds = append(tile.NbrIds, id)
+			}
+		}
+
 		b1, _ := countSingle(tile, t, Bottom)
-		b += b1
+		if b1 > 0 {
+			b += b1
+			if add {
+				tile.NbrIds = append(tile.NbrIds, id)
+			}
+		}
+
 		r1, _ := countSingle(tile, t, Right)
-		r += r1
+		if r1 > 0 {
+			r += r1
+			if add {
+				tile.NbrIds = append(tile.NbrIds, id)
+			}
+		}
 	}
 	return
 }
 
-func permutateToTopLeft (allTiles []Tile, tile Tile) Tile {
+func permutateToTopLeft (allTiles map[int]Tile, tile *Tile)  {
 	for i := 0; i < 4; i++ {
-		u,l,b,r := countNbrs(allTiles, tile)
+		u,l,b,r := countNbrs(allTiles, tile, false)
 		if u == 0 && l == 0 && b == 1 && r == 1 {
-			return tile
+			return
 		}
 		tile.rotate()
 	}
 	tile.flip()
 	for i := 0; i < 4; i++ {
-		u,l,b,r := countNbrs(allTiles, tile)
+		u,l,b,r := countNbrs(allTiles, tile, false)
 		if u == 0 && l == 0 && b == 1 && r == 1 {
-			return tile
+			return
 		}
 	}
-	return tile
+	return
 }
 
-func fillRowLR(grid map[Pos]Tile, tiles []Tile, rowN int) {
+func fillRowLR(grid map[Pos]Tile, tiles map[int]Tile, rowN int) {
 	leftPiece, _ := grid[Pos{X:0, Y:rowN}]
 	for i := 1; i < 12; i++ {
-		for _, t := range tiles {
-			if leftPiece.Id == t.Id { // a tile connot neighbour itself
-				continue
-			}
+		for _, k := range leftPiece.NbrIds {
+			t := tiles[k]
 
-			hit, tile := countSingle(leftPiece, t, Right)
+
+			hit, tile := countSingle(&leftPiece, t, Right)
 			temp := tile
 			if (hit == 1) {
 				grid[Pos{X:i, Y:rowN}] = temp
@@ -185,15 +210,13 @@ func fillRowLR(grid map[Pos]Tile, tiles []Tile, rowN int) {
 	return
 }
 
-func fillColTB(grid map[Pos]Tile, tiles []Tile, colN int) {
+func fillColTB(grid map[Pos]Tile, tiles map[int]Tile, colN int) {
 	abovePiece, _  := grid[Pos{X:colN, Y:0}]
 	for i := 1; i < 12; i++ {
-		for _, t := range tiles {
-			if abovePiece.Id == t.Id { // a tile connot neighbour itself
-				continue
-			}
+		for _, k := range abovePiece.NbrIds {
+			t := tiles[k]
 
-			hit, tile := countSingle(abovePiece, t, Bottom)
+			hit, tile := countSingle(&abovePiece, t, Bottom)
 			temp := tile
 			if (hit == 1) {
 				grid[Pos{X:colN, Y:i}] = temp
@@ -205,7 +228,7 @@ func fillColTB(grid map[Pos]Tile, tiles []Tile, colN int) {
 	return
 }
 
-func completePuzzle(grid map[Pos]Tile, tiles []Tile) {
+func completePuzzle(grid map[Pos]Tile, tiles map[int]Tile) {
 	fillRowLR(grid, tiles, 0)
 	fillColTB(grid, tiles, 0)
 
@@ -288,15 +311,21 @@ func main() {
 
 	part1 := 1
 	topLeft := Tile{}
-	for _, t := range ts {
-		u,l,b,r := countNbrs(ts, t)
+
+	for i, t := range ts {
+		temp := t
+		u,l,b,r := countNbrs(ts, &temp, true)
+		ts[i] = temp
 		if u+l+b+r == 2 {
-			part1 *= t.Id
-			topLeft = t
+			part1 *= i
+			topLeft = ts[i]
 		}
 	}
+	// fmt.Println(topLeft)
+	// fmt.Println(ts[3793])
+
 	// rotate topLeft so that it only has neighnours below and to the right...
-	topLeft = permutateToTopLeft(ts, topLeft)
+	permutateToTopLeft(ts, &topLeft)
 	// ...and insert it into the puzzle
 	puzzle := make(map[Pos]Tile)
 	puzzle[Pos{X:0, Y:0}] = topLeft

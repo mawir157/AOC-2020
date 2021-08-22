@@ -10,5 +10,6 @@ namespace AH
 	std::vector<std::string> ParseLineGroups(const std::vector<std::string>& ss,
 		                                       const char sep=' ');
 	std::vector<std::string> Split(const std::string &s, char delim);
+	uint64_t IntPow(const uint64_t x, const uint64_t p);
 
 }

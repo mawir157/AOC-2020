@@ -75,4 +75,27 @@ namespace AH
         return elems;
     }
 
+    uint64_t IntPow(const uint64_t x, const uint64_t p)
+    {
+        if (p == 0)
+        {
+            return 1;
+        }
+        if (p == 1)
+        {
+            return x;
+        }
+      
+        int tmp = IntPow(x, p/2);
+        
+        if (p%2 == 0)
+        {
+            return tmp * tmp;
+        }
+        else
+        {
+            return x * tmp * tmp;
+        }
+    }
+
 }

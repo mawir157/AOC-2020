@@ -33,11 +33,11 @@ namespace Day04
 			}
 			else if (key == "eyr")
 			{
-			 	part2 &=  (std::regex_search (value, m, std::regex("(202[0-9]|2030)")));
+			 	part2 &= (std::regex_search (value, m, std::regex("(202[0-9]|2030)")));
 			}
 			else if (key == "hgt")
 			{
-			 	part2 &=  (std::regex_search (value, m,
+			 	part2 &= (std::regex_search (value, m,
 			 		      std::regex("(59in|6[0-9]in|7[0-6]in|1[5-8][0-9]cm|19[0-3]cm)")));
 			}
 			else if (key == "hcl")
@@ -46,12 +46,12 @@ namespace Day04
 			}
 			else if (key == "ecl")
 			{
-			 	part2 &=  (std::regex_search (value, m,
+			 	part2 &= (std::regex_search (value, m,
 			 		                        std::regex("(amb|blu|brn|gry|grn|hzl|oth)")));
 			}
 			else if (key == "pid")
 			{
-			 	part2 &=  (std::regex_search (value, m, std::regex("^([0-9]){9}$")));
+			 	part2 &= (std::regex_search (value, m, std::regex("^([0-9]){9}$")));
 			}
 	  }
 

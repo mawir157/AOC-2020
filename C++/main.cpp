@@ -10,5 +10,6 @@ int main(int argc, char const *argv[])
 	Day06::Run("../input/input06.txt");
 	Day07::Run("../input/input07.txt");
 	Day09::Run("../input/input09.txt");
+	Day10::Run("../input/input10.txt");
 	return 0;
 }

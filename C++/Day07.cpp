@@ -9,10 +9,10 @@ namespace Day07
 		Bag();
 		Bag(const std::string& s);
 		Bag(const std::string& name,
-			  const std::vector<std::pair<std::string, uint64_t>> cts);
-	// private:
+			  const std::map<std::string, uint64_t>  cts);
+
 		std::string Name;
-		std::vector<std::pair<std::string, uint64_t>> Contents;
+		std::map<std::string, uint64_t> Contents;
 		bool Has(const std::string name) const;
 	};
 
@@ -20,7 +20,8 @@ namespace Day07
 	{
 		auto parts = AH::SplitOnString(s, " contain ");
 		auto parent = parts[0].substr(0, parts[0].size()-5);
-		std::vector<std::pair<std::string, uint64_t>> cs;
+		// std::vector<std::pair<std::string, uint64_t>> cs;
+		std::map<std::string, uint64_t> cs;
 
 		if (parts[1].front() != 'n')
 		{
@@ -31,7 +32,7 @@ namespace Day07
 				auto n = std::stoi(temp[0]);
 				auto c_name = temp[1] + " " + temp[2];
 
-				cs.emplace_back(c_name, n);
+				cs[c_name] = n;
 			}
 		}
 
@@ -43,15 +44,15 @@ namespace Day07
 	{};
 
 	Bag::Bag(const std::string& name,
-			  const std::vector<std::pair<std::string, uint64_t>> cts) :
+			  	 const std::map<std::string, uint64_t> cts) :
 		Name(name), Contents(cts)
 	{};
 
 	bool Bag::Has(const std::string name) const
 	{
-		for (auto p : Contents)
+		for (auto [k, v] : Contents)
 		{
-			if (std::get<0>(p) == name)
+			if (k == name)
 			{
 				return true;
 			}
@@ -60,7 +61,7 @@ namespace Day07
 	}
 
 	std::set<std::string> upstream(const std::vector<Bag>& bags,
-		             								const std::string& target) {
+		             								 const std::string& target) {
 		std::set<std::string> contains;
 
 		for (auto b : bags)
@@ -109,17 +110,17 @@ namespace Day07
 		                                 uint64_t counter,
 		                                 const Bag topBag)
 	{
-		std::vector<std::pair<std::string, uint64_t>> newContents;
+		std::map<std::string, uint64_t> newContents;
 		for (auto b : bags)
 		{
-			for (auto j : topBag.Contents)
+			for (auto [j_name, j_value] : topBag.Contents)
 			{
-				if (b.Name == std::get<0>(j))
+				if (b.Name == j_name)
 				{
-					counter += std::get<1>(j);
-					for (auto k : b.Contents)
+					counter += j_value;
+					for (auto [k_name, k_value] : b.Contents)
 					{
-						newContents.emplace_back(std::get<0>(k), std::get<1>(j) * std::get<1>(k));
+						newContents[k_name] += j_value * k_value;
 					}
 				}
 			}
@@ -158,5 +159,4 @@ namespace Day07
 
 		return 0;
 	}
-
 }

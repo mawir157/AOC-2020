@@ -19,14 +19,12 @@ namespace Day03
 	int Run(const std::string& filename)
 	{
 		auto inputLines = AH::ReadTextFile(filename);
-		// auto w = inputLines.size();
+
 		auto t1 = toboggan(inputLines, 1, 1);
 		auto t2 = toboggan(inputLines, 1, 3);
 		auto t3 = toboggan(inputLines, 1, 5);
 		auto t4 = toboggan(inputLines, 1, 7);
 		auto t5 = toboggan(inputLines, 2, 1);
-
-		std::cout << t1 << "|" << t2 << "|" << t3 << "|" << t4 << "|" << t5 << std::endl; 
 
 	  AH::PrintSoln(3, t2, t1*t2*t3*t4*t5);
 

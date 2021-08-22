@@ -30,6 +30,33 @@ namespace AH
         return lines;
     }
 
+    std::vector<std::string> ParseLineGroups(const std::vector<std::string>& ss,
+                                             const char sep)
+    {
+        std::vector<std::string> lineGroups;
+
+        std::string temp = "";
+        for (auto l : ss)
+        {
+            if (l.length() != 0)
+            {
+                if (temp.length() != 0)
+                {
+                    temp += sep;
+                }
+                temp += l;
+            }
+            else
+            {
+                lineGroups.push_back(temp);
+                temp = "";
+            }
+        }
+        lineGroups.push_back(temp);
+
+        return lineGroups;
+    }
+
     template <typename Out>
     void split(const std::string &s, char delim, Out result)
     {
@@ -47,6 +74,5 @@ namespace AH
         AH::split(s, delim, std::back_inserter(elems));
         return elems;
     }
-
 
 }

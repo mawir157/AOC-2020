@@ -23,7 +23,6 @@ namespace Day02
 		auto inputLines = AH::ReadTextFile(filename);
 
 	  int p1 = 0, p2 = 0;
-	  std::cout << p1 << std::endl;
 	  for (auto pw : inputLines)
 	  {
 	  	auto [ok1, ok2] = check_string(pw);

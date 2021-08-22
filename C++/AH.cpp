@@ -75,6 +75,28 @@ namespace AH
         return elems;
     }
 
+    std::vector<std::string> SplitOnString(const std::string &s,
+                                           const std::string delim)
+    {
+        std::vector<std::string> elems;
+        std::string scopy(s);
+
+        size_t pos = 0;
+        std::string token;
+        while ((pos = scopy.find(delim)) != std::string::npos) {
+            token = scopy.substr(0, pos);
+            elems.push_back(token);
+            scopy.erase(0, pos + delim.length());
+        }
+
+        if (scopy.length() > 0)
+        {
+            elems.push_back(scopy);
+        }
+
+        return elems;
+    }
+
     uint64_t IntPow(const uint64_t x, const uint64_t p)
     {
         if (p == 0)

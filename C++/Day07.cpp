@@ -1,4 +1,3 @@
-#include "Day07.h"
 #include "AH.h"
 
 namespace Day07

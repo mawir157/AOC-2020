@@ -62,7 +62,7 @@ func (m *Machine) tick() (exitCode int) {
 }
 
 func (m *Machine) run() (exitCode int) {
- 	exitCode = 0
+  exitCode = 0
 
 	for exitCode == 0 {
 		exitCode = m.tick()

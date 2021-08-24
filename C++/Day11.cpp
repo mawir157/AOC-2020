@@ -8,34 +8,11 @@ namespace Day11
 		Pos(const int X, const int Y);
 
 		int X,Y;
-		void shift(const Pos& dir);
-		
-		bool operator <(const Pos& rhs) const
-	  {
-	    if (this->X != rhs.X)
-	    {
-	     	return (this->X < rhs.X);
-	    }
-
-			if (this->Y != rhs.Y)
-	    {
-	     	return (this->Y < rhs.Y);
-	    }
-
-	    return false;
-	  }
-
 	};
 
 	Pos::Pos(const int X, const int Y) :
 		X(X), Y(Y)
 	{}
-
-	void Pos::shift(const Pos& dir)
-	{
-		X += dir.X;
-		Y += dir.Y;
-	}
 
 	std::vector<Pos> dirs {Pos(-1,-1), Pos(-1, 0), Pos(-1, 1),
 										  	 Pos( 0,-1),             Pos( 0, 1),
@@ -43,48 +20,55 @@ namespace Day11
 
 	enum seat { none = 1, full, open };
 
-	uint64_t BuildSeatMap(const std::vector<std::string> ss,
-		                    std::map<Pos, size_t>& seats)
+	typedef	std::vector<std::vector<seat>> SeatingPlan;
+
+	std::tuple<SeatingPlan, uint64_t>
+	                              BuildSeatMap(const std::vector<std::string>& ss)
 	{
 		uint64_t filled = 0;
+		auto rows = ss.size();
+		auto cols = ss[0].length();
+		SeatingPlan sp(rows, std::vector<seat> (cols));
+
 		int i = 0, j = 0;
 		for (auto s : ss)
 		{
 			j = 0;
 			for (auto c : s)
 			{
-				Pos temp = Pos(i,j);
 				if (c == '.')
 				{
-					// seats[temp] = seat::none; // Void
+					sp[i][j] = seat::none;
 				}
 				else if (c == '#')
 				{
-					seats[temp] = seat::full; // full
+					sp[i][j] = seat::full;
 					filled++; 
 				}
 				else if (c == 'L')
 				{
-					seats[temp] = seat::open; // open
+					sp[i][j] = seat::open;
 				}
 				j++;
 			}
 			i++;
 		}
 
-		return filled;
+		return { sp, filled };
 	}
 
-	bool LookInDir(const std::map<Pos, size_t> seats,
-		             const Pos pos, const Pos dir, const size_t upto)
+	bool LookInDir(const SeatingPlan& seats, const size_t row, const size_t col,
+		             const size_t dr, const size_t dc, const size_t upto)
 	{
-		auto temp = Pos(pos.X, pos.Y);
+		auto r = row;
+		auto c = col;
 		for (size_t i = 0; i < upto; ++i)
 		{
-			temp.shift(dir);
-			if (seats.count(temp) == 1)
+			r += dr;
+			c += dc;
+			if ((r >= 0) && (c >= 0) && (r < seats.size()) && (c < seats[0].size()))
 			{
-				auto status = seats.find(temp)->second;
+				auto status = seats[r][c];
 				switch(status)
 				{
 					case seat::none: // void - do nothing
@@ -97,93 +81,87 @@ namespace Day11
 						break;
 				}
 			} else {
-				return false; // we've gone off the end of the grid without seeing a seat
+				return false; //we've gone off the end of the grid without seeing a seat
 			}
 		}
 		return false;
 	}
 
-	uint64_t Update(std::map<Pos, size_t>& seats,
+	uint64_t Update(const SeatingPlan& seats, SeatingPlan& spNew,
 		              const int sight, const int threshold)
 	{
-		std::map<Pos, size_t> newSeats;
 		uint64_t filled = 0;
 
-		for (auto [pos, status] : seats)
+		for (size_t r = 0; r < seats.size(); ++r)
 		{
-			size_t nbrs = 0;
-			for (auto d : dirs)
+			for (size_t c = 0; c < seats[0].size(); ++c)
 			{
-				nbrs += (LookInDir(seats, pos, d, sight) ? 1 : 0);
-			}
-
-			switch(status)
-			{
-				case seat::none:
-					// newSeats[pos] = seat::none;
-					break;
-				case seat::full:
-					if (nbrs >= threshold)
-					{
-						newSeats[pos] = seat::open;
-					}
-					else
-					{
-						newSeats[pos] = seat::full;
-						filled++;
-					}
-					break;
-				case seat::open:
-					if (nbrs == 0)
-					{
-						newSeats[pos] = seat::full;
-						filled++;
-					}
-					else
-					{
-						newSeats[pos] = seat::open;
-					}
-					break;
+				auto status = seats[r][c];
+				size_t nbrs = 0;
+				for (auto d : dirs)
+				{
+					nbrs += (LookInDir(seats, r, c, d.X, d.Y, sight) ? 1 : 0);
+				}
+				switch(status)
+				{
+					case seat::none:
+						spNew[r][c] = seat::none;
+						break;
+					case seat::full:
+						if (nbrs >= threshold)
+						{
+							spNew[r][c] = seat::open;
+						}
+						else
+						{
+							spNew[r][c] = seat::full;
+							filled++;
+						}
+						break;
+					case seat::open:
+						if (nbrs == 0)
+						{
+							spNew[r][c] = seat::full;
+							filled++;
+						}
+						else
+						{
+							spNew[r][c] = seat::open;
+						}
+						break;
+				}
 			}
 		}
-		seats = newSeats;
 
 		return filled;
 	}
 
-	uint64_t UpdateUntilStable(std::map<Pos, size_t>& seats,
-		                         const uint64_t prev,
-		                         const int sight,
-		                         const int threshold){
-		auto cur = Update(seats, sight, threshold);
-		std::cout << cur << std::endl;
-		if (cur == prev) {
-			return cur;
-		} else {
-			return UpdateUntilStable(seats, cur, sight, threshold);
+	uint64_t UpdateUntilStable(const SeatingPlan& seats, const int sight,
+		                         const int threshold)
+	{
+		auto buffer1 = seats;
+		auto buffer2 = seats;
+		uint64_t prev = 0;
+
+		auto cur = Update(buffer1, buffer2, sight, threshold);
+
+		while (cur != prev)
+		{
+			prev = cur;
+			buffer1 = buffer2;
+			cur = Update(buffer1, buffer2, sight, threshold);
 		}
+
+		return cur;
 	}
 
 	int Run(const std::string& filename)
 	{
 		auto inputLines = AH::ReadTextFile(filename);
-		std::map<Pos, size_t> seats;
-		auto filled = BuildSeatMap(inputLines, seats);
+		auto [sp, filled] = BuildSeatMap(inputLines);
 
-		std::cout << Update(seats, 1, 4) << std::endl;
-		// std::cout << std::endl;
-
-		// size_t nbrs = 0;
-		// for (auto d : dirs)
-		// {
-		// 	nbrs += (LookInDir(seats, Pos(0,0), d, 1) ? 1 : 0);
-		// 	// std::cout<< nbrs << "->";
-		// }
-
-		// std::cout << Update(seats, 1, 4) << std::endl;
-		// std::cout << Update(seats, 1, 4) << std::endl;
-
-		AH::PrintSoln(11, UpdateUntilStable(seats, filled, 1, 4), 2);
+		AH::PrintSoln(11, UpdateUntilStable(sp, 1, 4),
+			                UpdateUntilStable(sp, 1000, 5));
 
 		return 0;
 	}

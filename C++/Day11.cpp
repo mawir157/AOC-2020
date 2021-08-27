@@ -88,7 +88,7 @@ namespace Day11
 	}
 
 	uint64_t Update(const SeatingPlan& seats, SeatingPlan& spNew,
-	                const int sight, const int threshold)
+	                const uint64_t sight, const uint64_t threshold)
 	{
 		uint64_t filled = 0;
 

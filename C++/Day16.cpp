@@ -113,7 +113,7 @@ namespace Day16
 				in.Delete(kill);
 		}
 
-		for (size_t i; i < outIndices.size(); ++i)
+		for (size_t i = 0; i < outIndices.size(); ++i)
 			if (outIndices[i] < 6)
 				prod *= me[i];
 

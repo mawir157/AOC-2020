@@ -128,7 +128,6 @@ namespace Day17
 		{
 			space3 = tick(space3, 3);
 			space4 = tick(space4, 4);
-
 		}
 
 		AH::PrintSoln(17, space3.size(), space4.size());

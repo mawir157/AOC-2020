@@ -44,7 +44,7 @@ namespace Day12
 	}
 
 		Robot::Robot(const int x, const int y, const int dir,
-			           const int wx, const int wy)
+		             const int wx, const int wy)
 	{
 		Locn = Pos(x,y);
 		Dir = dir;
@@ -159,8 +159,8 @@ namespace Day12
 		auto inputLines = AH::ReadTextFile(filename);
 		std::vector<Instruction> ins;
 		std::transform(inputLines.begin(), inputLines.end(),
-			             std::back_inserter(ins),
-	                 [](const std::string s) -> Instruction { return parseLine(s); });
+		               std::back_inserter(ins),
+		               [](const std::string s) -> Instruction { return parseLine(s); });
 
 		Robot starbug(0, 0, 0);
 		for (auto i : ins)

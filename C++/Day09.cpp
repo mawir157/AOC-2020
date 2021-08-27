@@ -23,7 +23,7 @@ namespace Day09
 
 		return false;
 	}
-  std::tuple<size_t, size_t> findRange(const std::vector<uint64_t>& arr, 
+	std::tuple<size_t, size_t> findRange(const std::vector<uint64_t>& arr, 
 		                                   const size_t target,
 		                                   const size_t blockStart,
 		                                   const size_t blockSize)
@@ -55,8 +55,8 @@ namespace Day09
 
 		std::vector<uint64_t> values;
 		std::transform(inputLines.begin(), inputLines.end(),
-			             std::back_inserter(values),
-	                 [](std::string s) -> uint64_t { return std::strtoull(s.c_str(), NULL, 0); });
+		               std::back_inserter(values),
+		               [](std::string s) -> uint64_t { return std::strtoull(s.c_str(), NULL, 0); });
 
 		uint64_t part1 = 0;
 		for (size_t i = 0; i < values.size(); ++i)
@@ -75,13 +75,9 @@ namespace Day09
 		for (size_t i = a; i < a + b; ++i)
 		{
 			if (values[i] < min)
-			{
 				min = values[i];
-			}
 			else if (values[i] > max)
-			{
 				max = values[i];
-			}
 		}
 
 		AH::PrintSoln(9, part1, max + min);

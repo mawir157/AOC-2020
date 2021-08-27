@@ -12,7 +12,7 @@ namespace Day15
 	}
 
 	uint64_t playGame(std::map<uint64_t, uint64_t>& game, uint64_t n,
-		                bool seen, const uint64_t turns, const uint64_t offset)
+	                  bool seen, const uint64_t turns, const uint64_t offset)
 	{
 		uint64_t next = 0;
 		for (uint64_t turn = offset; turn <= turns; ++turn)
@@ -41,7 +41,7 @@ namespace Day15
 		if (seenZero)
 			init = input.back();
 
-		auto s = playGame(q1, init, seenZero, 2020,        input.size() + 1);
+		auto s = playGame(q1, init, seenZero, 2020,     input.size() + 1);
 		auto t = playGame(q2, init, seenZero, 30000000, input.size() + 1);
 
 		AH::PrintSoln(15, s, t);

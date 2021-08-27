@@ -41,8 +41,8 @@ namespace Day10
 		
 		std::vector<int> values;
 		std::transform(inputLines.begin(), inputLines.end(),
-			             std::back_inserter(values),
-	                 [](std::string s) -> int { return std::stoi(s); });
+		               std::back_inserter(values),
+		               [](std::string s) -> int { return std::stoi(s); });
 
 		std::sort(values.begin(), values.end(), std::greater<>());
 		values.push_back(0);

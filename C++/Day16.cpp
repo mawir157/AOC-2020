@@ -12,7 +12,7 @@ namespace Day16
 			          const uint64_t rl, const uint64_t rh) :
 		LhsLo (ll), LhsHi(lh), RhsLo(rl), RhsHi(rh) {}
 		bool Ok(const uint64_t i) const { return (LhsLo <= i && i <= LhsHi) ||
-			                                       (RhsLo <= i && i <= RhsHi); }
+		                                         (RhsLo <= i && i <= RhsHi); }
 		void Possible(const Ticket& ticket);
 		void Delete(const uint64_t item);
 		size_t size() const { return ValidIndices.size(); }
@@ -25,7 +25,7 @@ namespace Day16
 		const uint64_t RhsHi;
 		
 		std::vector<uint64_t> ValidIndices{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-			                                 10,11,12,13,14,15,16,17,18,19};
+		                                   10,11,12,13,14,15,16,17,18,19};
 	};
 
 	void DoubleRange::Possible(const Ticket& ticket)
@@ -42,11 +42,11 @@ namespace Day16
 	void DoubleRange::Delete(const uint64_t item)
 	{
 		ValidIndices.erase(std::remove(ValidIndices.begin(), ValidIndices.end(), item),
-			                 ValidIndices.end());
+		                   ValidIndices.end());
 	}
 
 	std::vector<uint64_t> GetInvalidFields(const std::vector<DoubleRange>& intervals,
-		                                     const std::vector<uint64_t>& ticket)
+	                                       const std::vector<uint64_t>& ticket)
 	{
 		std::vector<uint64_t> invalid;
 		for (auto v : ticket)
@@ -63,7 +63,7 @@ namespace Day16
 	}
 
 	uint64_t part1(const std::vector<DoubleRange>& intervals,
-                 const std::vector<Ticket>& tickets)
+	               const std::vector<Ticket>& tickets)
 	{
 		uint64_t invalid = 0;
 		for (auto t : tickets)
@@ -137,7 +137,7 @@ namespace Day16
 				auto rhs   = AH::Split(pair[1], '-');
 
 				DoubleRange range(std::stoi(lhs[0]), std::stoi(lhs[1]),
-					                std::stoi(rhs[0]), std::stoi(rhs[1]));
+				                  std::stoi(rhs[0]), std::stoi(rhs[1]));
 
 				intervals.push_back(range);
 			}

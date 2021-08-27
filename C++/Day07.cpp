@@ -8,7 +8,7 @@ namespace Day07
 		Bag();
 		Bag(const std::string& s);
 		Bag(const std::string& name,
-			  const std::map<std::string, uint64_t>  cts);
+		    const std::map<std::string, uint64_t>  cts);
 
 		std::string Name;
 		std::map<std::string, uint64_t> Contents;
@@ -43,39 +43,31 @@ namespace Day07
 	{};
 
 	Bag::Bag(const std::string& name,
-			  	 const std::map<std::string, uint64_t> cts) :
+	         const std::map<std::string, uint64_t> cts) :
 		Name(name), Contents(cts)
 	{};
 
 	bool Bag::Has(const std::string name) const
 	{
 		for (auto [k, v] : Contents)
-		{
 			if (k == name)
-			{
 				return true;
-			}
-		}
 		return false;
 	}
 
 	std::set<std::string> upstream(const std::vector<Bag>& bags,
-		             								 const std::string& target) {
+	                               const std::string& target) {
 		std::set<std::string> contains;
 
 		for (auto b : bags)
-		{
 			if (b.Has(target))
-			{
 				contains.insert(b.Name);
-			}
-		}
 
 		return contains;
 	}
 
 	std::set<std::string> mapUpstream(const std::vector<Bag>& bags,
-		             									  const std::set<std::string>& targets) {
+	                                  const std::set<std::string>& targets) {
 		std::set<std::string> contains;
 
 		for (auto t : targets)
@@ -118,9 +110,7 @@ namespace Day07
 				{
 					counter += j_value;
 					for (auto [k_name, k_value] : b.Contents)
-					{
 						newContents[k_name] += j_value * k_value;
-					}
 				}
 			}
 		}

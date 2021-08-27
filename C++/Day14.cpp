@@ -37,7 +37,8 @@ namespace Day14
 	}
 
 	std::vector<uint64_t> applyMaskToRegistries(const std::string& mask,
-		     const uint64_t index, const std::vector<uint64_t> regs)
+	                                            const uint64_t index,
+	                                            const std::vector<uint64_t>& regs)
 	{
 		std::vector<uint64_t> newRegs;
 		if (index >= mask.length())
@@ -107,9 +108,8 @@ namespace Day14
 	{
 		uint64_t total = 0;
 		for (auto [k, v] : Memory)
-		{
 			total += v;
-		}
+
 		return total;
 	}
 

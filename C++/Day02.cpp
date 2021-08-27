@@ -14,22 +14,22 @@ namespace Day02
 		auto ct    = std::count(pw.begin(), pw.end(), c); 
 
 		return std::make_tuple( ((ct >= lo) && (ct <= hi)),
-		                          ((pw.at(lo-1) == c) != (pw.at(hi-1) == c)) );
+		                        ((pw.at(lo-1) == c) != (pw.at(hi-1) == c)) );
 	}
 
 	int Run(const std::string& filename)
 	{
 		auto inputLines = AH::ReadTextFile(filename);
 
-	  int p1 = 0, p2 = 0;
-	  for (auto pw : inputLines)
-	  {
-	  	auto [ok1, ok2] = check_string(pw);
-	  	p1 += ok1 ? 1 : 0;
-	  	p2 += ok2 ? 1 : 0;
-	  }
+		int p1 = 0, p2 = 0;
+		for (auto pw : inputLines)
+		{
+			auto [ok1, ok2] = check_string(pw);
+			p1 += ok1 ? 1 : 0;
+			p2 += ok2 ? 1 : 0;
+		}
 
-	  AH::PrintSoln(2, p1, p2);
+		AH::PrintSoln(2, p1, p2);
 
 		return 0;
 	}

@@ -25,7 +25,7 @@ namespace Day03
 		auto t4 = toboggan(inputLines, 1, 7);
 		auto t5 = toboggan(inputLines, 2, 1);
 
-	  AH::PrintSoln(3, t2, t1*t2*t3*t4*t5);
+		AH::PrintSoln(3, t2, t1*t2*t3*t4*t5);
 
 		return 0;
 	}

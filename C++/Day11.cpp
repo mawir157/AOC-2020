@@ -15,8 +15,8 @@ namespace Day11
 	{}
 
 	std::vector<Pos> dirs {Pos(-1,-1), Pos(-1, 0), Pos(-1, 1),
-										  	 Pos( 0,-1),             Pos( 0, 1),
-												 Pos( 1,-1), Pos( 1, 0), Pos( 1, 1)};
+	                       Pos( 0,-1),             Pos( 0, 1),
+	                       Pos( 1,-1), Pos( 1, 0), Pos( 1, 1)};
 
 	enum seat { none = 1, full, open };
 
@@ -58,7 +58,7 @@ namespace Day11
 	}
 
 	bool LookInDir(const SeatingPlan& seats, const size_t row, const size_t col,
-		             const size_t dr, const size_t dc, const size_t upto)
+	               const size_t dr, const size_t dc, const size_t upto)
 	{
 		auto r = row;
 		auto c = col;
@@ -88,7 +88,7 @@ namespace Day11
 	}
 
 	uint64_t Update(const SeatingPlan& seats, SeatingPlan& spNew,
-		              const int sight, const int threshold)
+	                const int sight, const int threshold)
 	{
 		uint64_t filled = 0;
 
@@ -137,7 +137,7 @@ namespace Day11
 	}
 
 	uint64_t UpdateUntilStable(const SeatingPlan& seats, const int sight,
-		                         const int threshold)
+	                           const int threshold)
 	{
 		auto buffer1 = seats;
 		auto buffer2 = seats;
@@ -161,7 +161,7 @@ namespace Day11
 		auto [sp, filled] = BuildSeatMap(inputLines);
 
 		AH::PrintSoln(11, UpdateUntilStable(sp, 1, 4),
-			                UpdateUntilStable(sp, 1000, 5));
+		                  UpdateUntilStable(sp, 1000, 5));
 
 		return 0;
 	}

@@ -16,5 +16,6 @@ int main(int argc, char const *argv[])
 	Day13::Run("../input/input13.txt");
 	Day14::Run("../input/input14.txt");
 	Day15::Run("NO INPUT FILE");
+	Day16::Run("../input/input16.txt");
 	return 0;
 }

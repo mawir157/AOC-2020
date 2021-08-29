@@ -17,7 +17,7 @@ then
 		./aoc2020
 		rm -rf aoc2020
 	else
-		echo "Day " $day " does not exist"
+		echo "Day" $day "does not exist"
 	fi
 else
 	missing=""

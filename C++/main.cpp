@@ -86,9 +86,9 @@ int main(int argc, char const *argv[])
 	// Day21::Run("../input/input21.txt");
 	// #endif
 
-	// #ifdef DAY22
-	// Day22::Run("../input/input22.txt");
-	// #endif
+	#ifdef DAY22
+	Day22::Run("../input/input22.txt");
+	#endif
 
 	#ifdef DAY23
 	Day23::Run("NO INPUT FILE");

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <deque>
 #include <iostream>
 #include <fstream>
 #include <regex>

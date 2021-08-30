@@ -11,3 +11,7 @@
 # Rust build files
 /Rust/Cargo.lock
 /Rust/target/*
+# C++ files
+!/C++/*.cpp
+!/C++/*.h
+!/C++/run.sh

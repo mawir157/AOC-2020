@@ -6,6 +6,7 @@ namespace AH
 {
 	// I/0
 	void PrintSoln(const int day, const uint64_t soln1, const uint64_t soln2);
+	void PrintSolnFinal(const int day, const uint64_t soln1);
 	std::vector<std::string> ReadTextFile(const std::string& filename);
 	std::vector<std::string> ParseLineGroups(const std::vector<std::string>& ss,
 		                                       const char sep=' ');

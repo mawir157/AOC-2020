@@ -13,9 +13,9 @@ namespace Day23
 	private:
 		void tick();
 
-		std::map<uint64_t, uint64_t> Cups;
-		uint64_t                     Pointer;
-		uint64_t                     MaxEm;
+		std::unordered_map<uint64_t, uint64_t> Cups;
+		uint64_t Pointer;
+		uint64_t MaxEm;
 	};
 
 	Game::Game(const uint64_t size, const std::vector<uint64_t>& input)

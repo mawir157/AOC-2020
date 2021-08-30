@@ -70,9 +70,9 @@ int main(int argc, char const *argv[])
 	Day17::Run("../input/input17.txt");
 	#endif
 
-	// #ifdef DAY18
-	// Day18::Run("../input/input18.txt");
-	// #endif
+	#ifdef DAY18
+	Day18::Run("../input/input18.txt");
+	#endif
 
 	// #ifdef DAY19
 	// Day19::Run("../input/input19.txt");
@@ -94,12 +94,12 @@ int main(int argc, char const *argv[])
 	Day23::Run("NO INPUT FILE");
 	#endif
 
-	// #ifdef DAY24
-	// Day24::Run("../input/input24.txt");
-	// #endif
+	#ifdef DAY24
+	Day24::Run("../input/input24.txt");
+	#endif
 
-	// #ifdef DAY25
-	// Day25::Run("../input/input25.txt");
-	// #endif
+	#ifdef DAY25
+	Day25::Run("../input/input25.txt");
+	#endif
 	return 0;
 }

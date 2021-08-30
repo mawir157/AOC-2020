@@ -44,10 +44,7 @@ namespace Day22
 	void Game::playGame1()
 	{
 		while ((d1.size() > 0) && (d2.size() > 0))
-		{
 			playHand1();
-		}
-		std::cout << std::endl;
 
 		return;
 	}
@@ -75,8 +72,6 @@ namespace Day22
 		if (d1.size() == 0 || d2.size() == 0)
 			return;		
 
-		// auto c1 = d1[0];
-		// auto c2 = d2[0];
 		auto f1 = d1.front();
 		auto f2 = d2.front();
 

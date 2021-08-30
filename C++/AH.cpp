@@ -3,6 +3,15 @@
 namespace AH
 {
 
+    void PrintSolnFinal(const int day, const uint64_t soln1)
+    {
+        std::cout << "Day "       << day   << std::endl;
+        std::cout << "  Part 1: " << soln1 << std::endl;
+        std::cout << "  Part 2: " << "See you next year, I love you." << std::endl;
+
+        return;
+    }
+
     void PrintSoln(const int day, const uint64_t soln1, const uint64_t soln2)
     {
         std::cout << "Day "       << day   << std::endl;
